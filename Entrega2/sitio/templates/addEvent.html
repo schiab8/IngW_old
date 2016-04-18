@@ -1,0 +1,9 @@
+<form method="POST">
+    {% csrf_token %}
+
+    {{ form_event.as_p }}
+
+    <p> 
+        <input type="submit" value="Agregar" />
+    </p>
+</form>

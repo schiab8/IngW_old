@@ -21,8 +21,9 @@ from django.contrib.auth.forms import UserCreationForm
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', 'users.views.home'),
+    url(r'^$', 'sitio.views.home'),
     url(r'^login', views.login, {'template_name':'login.html'}),
     url(r'^logout/', views.logout, {'template_name':'logout.html'}),
     url('^register/', CreateView.as_view(template_name='register.html', form_class=UserCreationForm, success_url='/')),
+    url('^addEvent/', 'sitio.views.addEvent'),
 ]
