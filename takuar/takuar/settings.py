@@ -53,7 +53,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Entrega2.urls'
+ROOT_URLCONF = 'takuar.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Entrega2.wsgi.application'
+WSGI_APPLICATION = 'takuar.wsgi.application'
 
 
 # Database
