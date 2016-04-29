@@ -15,7 +15,7 @@ def home(request):
 
 def addEvent(request):
     if request.method == "GET":
-        mi_form = FormEvent()
+        mi_form = FormEvent(initial={"organizer":request.user})
     else:
         mi_form = FormEvent(request.POST)
         if mi_form.is_valid():

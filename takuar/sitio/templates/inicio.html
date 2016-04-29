@@ -1,22 +1,18 @@
-<html>
-<head>
-</head>
+{% extends 'base.html' %}
 
-<body>
-    <p>Usuario: {{ user }}</p>
+
+{% block content %}
+<p>Usuario: {{ user }}</p>
 <h1 id="title">{% block titulo %}Home{% endblock %}</h1>
 <a href='logout'>Log Out </a>
 
-<div id="contenido">
-    <h1> Próximos eventos: </h1>
-    <a href='addEvent'>Crear evento!</a>
-    {% for event in events_list %}
-        <h2>-------------------------------</h2>
-        <h2>{{ event.eventName }} </h2>
-        <h3>{{ event.fecha }} {{ event.startTime }} </h3>
-        <button>Más información...</button>
-    {% endfor %}
-
-</div>
-</body>
-</html>
+<h1> Próximos eventos: </h1>
+<a href='addEvent'>Crear evento!</a>
+{% for event in events_list %}
+    <h2>-------------------------------</h2>
+    <h2>{{ event.eventName }} </h2>
+    <h3>{{ event.fecha }} {{ event.startTime }} </h3>
+    <h4> Organizado por: {{ event.user }} </h4>
+    <button>Más información...</button>
+{% endfor %}
+{% endblock %}
