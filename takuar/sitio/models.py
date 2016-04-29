@@ -35,9 +35,9 @@ class Group(models.Model):
     user5 =  models.ForeignKey(User, null=True, blank=True, related_name='fifth')'''
 
 class UserProfile(models.Model):
-    userauth = models.OneToOneField(settings.AUTH_USER_MODEL)
+    userAuth = models.OneToOneField(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length=50)
-    profilePic = models.ForeignKey(Picture, blank=True)
+    profilePic = models.ForeignKey(Picture, blank=True, null=True)
     lastName = models.CharField(max_length=50)
     birth = models.DateTimeField()
     gender = models.ForeignKey(Gender, null=False, blank=False)

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User
-from sitio.models import Gender, UserType
+from sitio.models import Gender, UserType, UserProfile
 
 class UserRegisterForm(forms.Form):
     name = forms.CharField(min_length=3, max_length=50)
@@ -10,7 +10,6 @@ class UserRegisterForm(forms.Form):
     birth = forms.DateTimeField()
     gender = forms.ModelChoiceField(queryset=Gender.objects.all())
     email = forms.EmailField()
-    
     username = forms.CharField(min_length=5)
     password = forms.CharField(min_length=5, widget=forms.PasswordInput())
     password2 = forms.CharField(widget=forms.PasswordInput())
@@ -38,11 +37,12 @@ class UserRegisterForm(forms.Form):
         return password2
         
     def save(self):
-		data = self.cleaned_data
-		utype=UserType.objects.get(category='Usuario')
-		print utype, type(utype)
-		userauth = User(username=data['username'],password=data['password'])
-		userProfile = User(userauth=userauth, name=data['name'], profilePic=data['profilePic'], lastName=data['lastName'],
-		birth=data['birth'], gender=data['gender'], idType=utype, email=data['email'])
-		userauth.save()
-		userProfile.save()
+        data = self.cleaned_data
+        utype, created = UserType.objects.get_or_create(category='Usuario')
+        userAuth = User(username=data['username'],password=data['password'])
+        userAuth.save()
+        userProfile = UserProfile(userAuth = userAuth, name=data['name'], profilePic=data['profilePic'], lastName=data['lastName'],
+            birth=data['birth'], gender=data['gender'], idType=utype, email=data['email'])
+        userProfile.save()
+        print "username: %s, password: %s, email: %s" % (userAuth, userAuth.password, userAuth.email)
+        print "userProfile: %s" % userProfile
