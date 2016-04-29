@@ -1,0 +1,10 @@
+{% block content %}
+<h1> Información de evento:</h1>
+Nombre del evento:{{ event.eventName }}
+<p>
+Fecha: {{ event.startTime }}
+
+Lugar:{{ event.local }}
+Organiza: {{event.organizer}}
+</p>
+{% endblock %}

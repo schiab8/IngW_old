@@ -27,7 +27,8 @@ urlpatterns = [
     url(r'^$', 'sitio.views.home'),
     url(r'^login', views.login, {'template_name':'login.html'}),
     url(r'^logout/', views.logout, {'template_name':'logout.html'}),
-    url('^register/', user_registration_view, name='registration'),
-    url('^addEvent/', 'sitio.views.addEvent'),
-    url('^test/', 'sitio.views.test'),
+    url(r'^register/', user_registration_view, name='registration'),
+    url(r'^addEvent/', 'sitio.views.addEvent'),
+    url(r'^test/', 'sitio.views.test'),
+    url(r'^details', 'sitio.views.detailsEvent'),
 ]

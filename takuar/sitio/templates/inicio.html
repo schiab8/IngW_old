@@ -2,17 +2,17 @@
 
 
 {% block content %}
-<p>Usuario: {{ user }}</p>
+<p>Usuario: {{ user }} - <a href='logout'>Log Out </a></p>
 <h1 id="title">{% block titulo %}Home{% endblock %}</h1>
-<a href='logout'>Log Out </a>
-
-<h1> Próximos eventos: </h1>
 <a href='addEvent'>Crear evento!</a>
+
+<h2> Próximos eventos: </h2>
 {% for event in events_list %}
     <h2>-------------------------------</h2>
     <h2>{{ event.eventName }} </h2>
     <h3>{{ event.fecha }} {{ event.startTime }} </h3>
-    <h4> Organizado por: {{ event.user }} </h4>
-    <button>Más información...</button>
+    <h4> Organizado por: {{ event.organizer }} </h4>
+    <p>{{ event.id }} </p>
+    <a href='details?event={{ event.id }}'>Más información...</a>
 {% endfor %}
 {% endblock %}

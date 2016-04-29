@@ -1,9 +1,16 @@
-<form method="POST">
-    {% csrf_token %}
+{% extends 'base.html' %}
 
-    {{ form_event.as_p }}
-
-    <p> 
-        <input type="submit" value="Agregar" />
-    </p>
-</form>
+{% block content %}
+</script>
+<div class='row'>
+    <div class='col-md-12'>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form_event.as_p }}
+            <p> 
+            <input type="submit" value="Agregar" />
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

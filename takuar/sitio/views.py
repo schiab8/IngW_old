@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from sitio.models import Event
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 from sitio.forms import FormEvent
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 # Create your views here.
 def test(request): #Testeando Bootstrap
@@ -23,3 +24,16 @@ def addEvent(request):
             return HttpResponseRedirect('/')
 
     return render(request, 'addEvent.html', {'form_event': mi_form})
+
+
+def detailsEvent(request):
+    if request.method == "GET":
+        try:
+            event = Event.objects.get(pk=request.GET['event'])
+        except ObjectDoesNotExist:
+            event = None
+        if event is None:
+            return HttpResponse('No existe el evento')
+        else:
+            return render(request, 'infoEvent.html',{'event':event})
+        
