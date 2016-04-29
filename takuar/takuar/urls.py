@@ -17,13 +17,16 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth import views
 from django.views.generic.edit import CreateView
-from django.contrib.auth.forms import UserCreationForm
+
+from users.views import user_registration_view
+
+from users.forms import UserRegisterForm
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', 'sitio.views.home'),
     url(r'^login', views.login, {'template_name':'login.html'}),
     url(r'^logout/', views.logout, {'template_name':'logout.html'}),
-    url('^register/', CreateView.as_view(template_name='register.html', form_class=UserCreationForm, success_url='/')),
+    url('^register/', user_registration_view, name='registration'),
     url('^addEvent/', 'sitio.views.addEvent'),
 ]

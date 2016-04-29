@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
-
 from django.db import models
+from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your models here.
 
@@ -33,7 +34,8 @@ class Group(models.Model):
     user4 =  models.ForeignKey(User, null=True, blank=True, related_name='fourth')
     user5 =  models.ForeignKey(User, null=True, blank=True, related_name='fifth')'''
 
-class User(models.Model):
+class UserProfile(models.Model):
+    userauth = models.OneToOneField(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length=50)
     profilePic = models.ForeignKey(Picture, blank=True)
     lastName = models.CharField(max_length=50)
