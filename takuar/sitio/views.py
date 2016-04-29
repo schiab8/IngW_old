@@ -5,6 +5,9 @@ from sitio.forms import FormEvent
 from django.http import HttpResponseRedirect
 
 # Create your views here.
+def test(request): #Testeando Bootstrap
+    return render(request, 'base.html')
+
 @login_required
 def home(request):
     events = Event.objects.all()

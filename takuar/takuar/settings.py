@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'sitio',
-    'django_extensions',
 ]
 
 MIDDLEWARE_CLASSES = [
