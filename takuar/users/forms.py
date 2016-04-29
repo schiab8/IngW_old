@@ -39,7 +39,8 @@ class UserRegisterForm(forms.Form):
     def save(self):
         data = self.cleaned_data
         utype, created = UserType.objects.get_or_create(category='Usuario')
-        userAuth = User(username=data['username'],password=data['password'])
+        userAuth = User(username=data['username'])
+        userAuth.set_password(data['password'])
         userAuth.save()
         userProfile = UserProfile(userAuth = userAuth, name=data['name'], profilePic=data['profilePic'], lastName=data['lastName'],
             birth=data['birth'], gender=data['gender'], idType=utype, email=data['email'])

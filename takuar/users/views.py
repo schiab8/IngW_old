@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
 from users.forms import UserRegisterForm
 # Create your views here.
 
