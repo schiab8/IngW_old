@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$USER_HOME$/Documents/ingweb2016/takuar/.idea/takuar.iml" filepath="$USER_HOME$/Documents/ingweb2016/takuar/.idea/takuar.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/takuar.iml" filepath="$PROJECT_DIR$/.idea/takuar.iml" />
     </modules>
   </component>
 </project>
