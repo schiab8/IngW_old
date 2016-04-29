@@ -4,12 +4,6 @@
 <p>Tu usuario y contraseña no coinciden. Intenta nuevamente.</p>
 {% endif %}
 
-{% if next %}
-    {% if user.is_authenticated %}
-        <p>Tu cuenta no tiene acceso a esta página. Para seguir, ingresa con una cuenta que tenga acceso.</p>
-    {% endif %}
-{% endif %}
-
 
 <div class="container-fluid">
     <div class="panel panel-info">
