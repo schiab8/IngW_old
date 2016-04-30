@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from sitio.forms import FormEvent
 from django.http import HttpResponseRedirect, HttpResponse
+from datetime import datetime
+
 
 # Create your views here.
 def test(request): #Testeando Bootstrap
@@ -11,7 +13,8 @@ def test(request): #Testeando Bootstrap
 
 @login_required
 def home(request):
-    events = Event.objects.all()
+    now = datetime.now()
+    events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
     return render(request, 'inicio.html', {'events_list': events, 'user':request.user})
 
 def addEvent(request):
