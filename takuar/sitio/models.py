@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.utils import timezone
+from django.contrib.contenttypes.models import ContentType
 
 # Create your models here.
 
@@ -76,3 +78,17 @@ class Answer(models.Model):
     group1 = models.ForeignKey(Group, null=False, blank=False, related_name='from+')
     group2 = models.ForeignKey(Group, null=False, blank=False, related_name='to')
     answer = models.BooleanField(default=False)
+    
+class Coment(models.Model):
+	coment_object = models.ForeignKey(ContentType, related_name="content_type_set_for_%(class)s") #Apunta al objeto donde se comento
+	#object_type = GenericForeignKey(ct_field="content_type", fk_field="object_pk")#Tipo del objeto comentado
+	user = models.ForeignKey(User, blank=True, null=True, related_name="%(class)s_comments")
+	comment = models.TextField(max_length=300)
+	submit_date = models.DateTimeField(default=None)
+	is_removed = models.BooleanField(default=False)
+	
+def save(self, *args, **kwargs):
+        if self.submit_date is None:
+            self.submit_date = timezone.now()
+	
+	
