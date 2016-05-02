@@ -1,5 +1,5 @@
 from django import forms
-from sitio.models import Event, EventComment
+from sitio.models import Event, EventComment, UserReport
 from functools import partial
 
 
@@ -26,3 +26,14 @@ class FormEventComment(forms.ModelForm):
                 'submit_date': forms.HiddenInput(),
                 'event': forms.HiddenInput(),
                 }
+
+class FormReportUser(forms.ModelForm):
+    class Meta:
+        model = UserReport
+        exclude = []
+        widgets = {
+                'reporter':forms.HiddenInput(),
+                'reported':forms.HiddenInput(),
+                'submit_date':forms.HiddenInput(),
+                }
+        

@@ -31,4 +31,5 @@ urlpatterns = [
     url(r'^addEvent/', 'sitio.views.addEvent'),
     url(r'^test/', 'sitio.views.test'),
     url(r'^details', 'sitio.views.detailsEvent'),
+    url(r'reportUser','sitio.views.reportUser'),
 ]

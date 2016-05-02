@@ -109,3 +109,13 @@ class EventComment(Comment):
 
     def __str__(self):
         return "Comentario sobre evento: %s" % comment
+
+
+class UserReport(models.Model):
+    reporter = models.OneToOneField(User, related_name='reporter')
+    reported = models.OneToOneField(User, related_name='reported')
+    submit_date = models.DateTimeField()
+    report_message = models.TextField(max_length=300)
+
+    def __str__(self):
+        return "%s >> %s" % (self.reporter, self.reported)
