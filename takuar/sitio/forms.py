@@ -1,5 +1,5 @@
 from django import forms
-from sitio.models import Event
+from sitio.models import Event, EventComment
 from functools import partial
 
 
@@ -16,3 +16,13 @@ class FormEvent(forms.ModelForm):
             'organizer':forms.HiddenInput(),
             }
             #'startTime': forms.DateTimeInput(format='%dd/%mm/%YYYY'),
+
+class FormEventComment(forms.ModelForm):
+    class Meta:
+        model = EventComment
+        exclude = ['is_removed']
+        widgets = {
+                'user': forms.HiddenInput(),
+                'submit_date': forms.HiddenInput(),
+                'event': forms.HiddenInput(),
+                }

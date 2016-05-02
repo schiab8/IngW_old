@@ -9,22 +9,26 @@ from django.contrib.contenttypes.models import ContentType
 
 class Gender(models.Model):
     gender = models.CharField(max_length=25)
+
     def __str__(self):
         return self.gender
 
 class LocalType(models.Model):
     category = models.CharField(max_length=50)
+
     def __str__(self):
         return self.category
 
 class UserType(models.Model):
     category = models.CharField(max_length=50)
+
     def __str__(self):
         return self.category
 
 class Picture(models.Model):
     image = models.ImageField()
     caption = models.CharField(max_length=200)
+
     def __str__(self):
         return self.caption
 
@@ -47,6 +51,7 @@ class UserProfile(models.Model):
     email = models.CharField(max_length=50, blank=True)
     contact = models.CharField(max_length=200, blank=True)
     group = models.ManyToManyField(Group, blank=True)
+
     def __str__(self):
         return self.name +' '+ self.lastName
 
@@ -55,6 +60,7 @@ class Local(models.Model):
     adress = models.CharField(max_length=50)
     capacity = models.IntegerField()
     idType = models.ForeignKey(LocalType, null=False, blank=False)
+
     def __str__(self):
         return self.name
 
@@ -64,6 +70,7 @@ class Event(models.Model):
     organizer = models.ForeignKey(User, null=False, blank=False)
     startTime = models.DateTimeField()
     finishTime = models.DateTimeField()
+
     def __str__(self):
         return self.eventName
 
@@ -79,16 +86,26 @@ class Answer(models.Model):
     group2 = models.ForeignKey(Group, null=False, blank=False, related_name='to')
     answer = models.BooleanField(default=False)
     
-class Coment(models.Model):
-	coment_object = models.ForeignKey(ContentType, related_name="content_type_set_for_%(class)s") #Apunta al objeto donde se comento
-	#object_type = GenericForeignKey(ct_field="content_type", fk_field="object_pk")#Tipo del objeto comentado
-	user = models.ForeignKey(User, blank=True, null=True, related_name="%(class)s_comments")
-	comment = models.TextField(max_length=300)
-	submit_date = models.DateTimeField(default=None)
-	is_removed = models.BooleanField(default=False)
-	
-def save(self, *args, **kwargs):
-        if self.submit_date is None:
-            self.submit_date = timezone.now()
-	
-	
+class Comment(models.Model):
+    # ?
+    # comment_object = models.ForeignKey(ContentType, related_name="content_type_set_for_%(class)s") #Apunta al objeto donde se comento
+    #object_type = GenericForeignKey(ct_field="content_type", fk_field="object_pk")#Tipo del objeto comentado
+    user = models.ForeignKey(User, blank=True, null=True)
+    comment = models.TextField(max_length=300)
+    submit_date = models.DateTimeField(default=None)
+    is_removed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return " %s, %s, %s" % (self.submit_date, self.user, self.comment)
+
+class PictureComment(Comment):
+    picture = models.OneToOneField(Picture)
+
+    def __str__(self):
+        return "Comentario sobre foto: %s" % comment
+
+class EventComment(Comment):
+    event = models.OneToOneField(Event)
+
+    def __str__(self):
+        return "Comentario sobre evento: %s" % comment
