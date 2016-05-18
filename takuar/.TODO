@@ -1,0 +1,32 @@
+ ___________________________________________
+/|  ORDENAR POR PRIORIDAD (aproximado)      |
+||  Referencia de items:                    |
+||    [*] Relacionado con las correcciones. |
+||    [-] Por hacer                         |
+||    [/] A medias                          |
+||    [X] Revisar                           |
+||        Una vez revisada, mover de lista  |
+||__________________________________________|
+|/__________________________________________/
+
+    >>> PENDIENTES <<<
+
+[*] Crear grupo.
+[*] Invitaciones a grupos.
+[*] Relacionar grupos.
+[*] Chat.
+[*] En el modelo de datos, no se ve muy bien cómo pertenecen usuarios a grupos, cómo se guardan las invitaciones de usuarios a grupos y las coincidencias encontradas con otros grupos.
+[*] En el flujo de estados: solo es posible eliminar eventos si fueron denunciados?.
+[*] Foro o equivalente (contenido, discusión).
+[-] Carga de fotos.
+[-] Edición de perfiles.
+[-] Filtros de eventos (por zona, eventos pasados, los que vienen, los mas acudidos, etc)
+[-] Búsquedas (grupos, personas, lugares, etc).
+[-] Perfiles de usuarios, lugares, eventos. Con historiales y fotos.
+[-] Verificación de email.
+[-] Pulir sistema de reporte.
+[-] Historial de actividad de usuario.
+[-] API (Opcional).
+
+
+    >>> COMPLETADOS <<<
