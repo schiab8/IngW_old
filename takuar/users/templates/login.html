@@ -3,33 +3,30 @@
 {% if form.errors %}
 <p>Tu usuario y contraseña no coinciden. Intenta nuevamente.</p>
 {% endif %}
-
-
 <div class="container-fluid">
-    <div class="panel panel-info">
-        <div class="panel-heading">Log In</div>
-        <div class="panel-body">
-
-            <form class="form-inline" method="post" action="">
-                {% csrf_token %}
-                <input type="hidden" name="next" value="{{ next }}">
-
-                {% for field in form.visible_fields %}
-                    <div class="control-group {{ field.html_name }} {% if field.errors %}error{% endif %}">
-                        <label class="control-label">{{ field.label }}{% if field.field.required %} *{% endif %}</label>
-                        <div class="controls">
-                            {{ field }}
-                            {% if field.errors %}<span class="help-inline">{{ field.errors.as_text }}</span>{% endif %}
-                        </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+        <div class="login-window">
+            <h1>Login</h1>
+            <div class="login-body">
+                <form class="form-horizontal" method="post" action="">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ next }}">
+                    {% for field in form.visible_fields %}
+                    <div class="field-group {{ field.html_name }} {% if field.errors %}error{% endif %}">
+                        <label class="field-label">{{ field.label_tag }}</label>
+                        {{ field }}
+                        {% if field.errors %}<span>{{ field.errors.as_text }}</span>{% endif %}
                     </div>
-                {% endfor %}
+                    {% endfor %}
 
-                <input class="save btn btn-default" type="submit" value="Log In" />
-            </form>
-
+                    <input class="login-button" type="submit" value="LOGIN" />
+                </form>
+            </div>
+            <a href="/register">Registrarse</a>
         </div>
     </div>
-    <a href="/register">Registrarse</a>
+    <div class="col-sm-4"></div>
 </div>
 {% endblock %}
 
