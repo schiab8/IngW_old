@@ -18,16 +18,19 @@
 </head>
 
 <body>
-    <div id="header">
-        {% block header %}
-            {% if user.is_authenticated %}
-            <a href='/'>Ir al Inicio</a>
-            {% endif %}
-        {% endblock %}
-    </div>
-    <div id="content">
-        {% block content %}
-        {% endblock %}
-    </div>
+    {% block header %}
+    <header>
+    {% if user.is_authenticated %}
+    <a href='/'>Ir al Inicio</a>
+    {% endif %}
+    </header>
+    {% endblock %}
+
+    {% block navbar %}
+    <nav></nav>
+    {% endblock %}    
+
+    {% block content %}
+    {% endblock %}
 </body>
 </html>
