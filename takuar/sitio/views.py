@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sitio.models import Event, EventComment
+from sitio.models import Event, EventComment, Picture, UserProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -63,3 +63,8 @@ def reportUser(request):
             return HttpResponse('Reporte enviado')
         return render(request, ' reportUser.html', {'form':form, 'reported':reported})
         
+def userProfile(request):
+    if request.method == "GET":
+        user_profile = UserProfile.objects.get(userAuth=request.user)
+        return render(request, 'user_profile.html', {'userProfile':user_profile})
+

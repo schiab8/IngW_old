@@ -19,6 +19,7 @@ from django.contrib.auth import views
 from django.views.generic.edit import CreateView
 
 from users.views import user_registration_view
+from sitio.views import userProfile
 
 from users.forms import UserRegisterForm
 
@@ -32,4 +33,5 @@ urlpatterns = [
     url(r'^test/', 'sitio.views.test'),
     url(r'^details', 'sitio.views.detailsEvent'),
     url(r'reportUser','sitio.views.reportUser'),
+    url(r'^profile/', userProfile),
 ]

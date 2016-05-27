@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            {% if userProfile.profilePic %}
+            {{ userProfile.profilePic }}
+            {% endif %}
+            <h2>{{ userProfile.name }} {{ userProfile.lastName }} ({{ userProfile.userAuth }}) </h2>
+
+        </div>
+        <div class="col-md-9">
+            <p>
+            {{ userProfile.name }}
+            {{ userProfile.profilePic }}
+            {{ userProfile.birth }}
+            {{ userProfile.gender }}
+            {{ userProfile.idType }}
+            {{ userProfile.email }}
+            {{ userProfile.contact }}
+            </p>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
