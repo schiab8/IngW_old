@@ -68,3 +68,13 @@ def userProfile(request):
         user_profile = UserProfile.objects.get(userAuth=request.user)
         return render(request, 'user_profile.html', {'userProfile':user_profile})
 
+def newGroup(request):
+    if request.method == "GET": 
+        return render(request, 'newGroup.html')
+
+def searchUser(request):
+    if request.method == "GET":
+        user_list = User.objects.filter(username__startswith=request.GET['text'])
+        print user_list
+        print "Este es el valor de la request: %s" %request
+        return render(request, 'user_list.html',{'user_list':user_list})

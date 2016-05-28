@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class=container>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="input-group">
+                <input type="text" id="user-search-field" class="form-control" placeholder="Buscar usuario...">
+                <span class="input-group-btn"><button id="search-button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span> Buscar</button></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div id="user-search-list">
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var url_search_user= "{% url 'sitio.views.searchUser' %}";
+</script>
+<script src="{% static 'js/search_ajax.js' %}"></script>
+{% endblock %}

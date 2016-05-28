@@ -34,4 +34,6 @@ urlpatterns = [
     url(r'^details', 'sitio.views.detailsEvent'),
     url(r'reportUser','sitio.views.reportUser'),
     url(r'^profile/', userProfile),
+    url(r'^newGroup', 'sitio.views.newGroup'),
+    url(r'^search_user','sitio.views.searchUser'),
 ]
