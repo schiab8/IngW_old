@@ -1,3 +1,7 @@
 {% for user in user_list %}
-    <p>{{ user.username}}</p>
+    <div class="user-box">
+        <h3>{{ user.name }} {{ user.lastName }} <small>({{ user.userAuth.username }})</small></h3>
+
+        <button class="btn btn-default add-button">Invitar</button>
+    </div>
 {% endfor %}

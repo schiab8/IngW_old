@@ -65,7 +65,10 @@ def reportUser(request):
         
 def userProfile(request):
     if request.method == "GET":
-        user_profile = UserProfile.objects.get(userAuth=request.user)
+        if 'user' in request.GET:
+            user_profile = UserProfile.objects.get(userAuth__username=request.GET['user'])
+        else:
+            user_profile = UserProfile.objects.get(userAuth=request.user)
         return render(request, 'user_profile.html', {'userProfile':user_profile})
 
 def newGroup(request):
@@ -74,7 +77,5 @@ def newGroup(request):
 
 def searchUser(request):
     if request.method == "GET":
-        user_list = User.objects.filter(username__startswith=request.GET['text'])
-        print user_list
-        print "Este es el valor de la request: %s" %request
+        user_list = UserProfile.objects.filter(userAuth__username__startswith=request.GET['text'])
         return render(request, 'user_list.html',{'user_list':user_list})

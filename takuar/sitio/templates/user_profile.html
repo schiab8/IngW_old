@@ -6,19 +6,15 @@
             {% if userProfile.profilePic %}
             {{ userProfile.profilePic }}
             {% endif %}
-            <h2>{{ userProfile.name }} {{ userProfile.lastName }} ({{ userProfile.userAuth }}) </h2>
+            <h2>{{ userProfile.name }} {{ userProfile.lastName }} <small>({{ userProfile.userAuth }}) </small></h2>
 
         </div>
         <div class="col-md-9">
-            <p>
-            {{ userProfile.name }}
-            {{ userProfile.profilePic }}
-            {{ userProfile.birth }}
-            {{ userProfile.gender }}
-            {{ userProfile.idType }}
-            {{ userProfile.email }}
-            {{ userProfile.contact }}
-            </p>
+            <ul>
+                <li>{{ userProfile.gender }}</li>
+                <li>{{ userProfile.birth }}</li>
+                <li>Email: {{ userProfile.email }}</li>
+            </ul>
         </div>
     </div>
 </div>
