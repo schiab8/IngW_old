@@ -24,9 +24,9 @@ class Thread(models.Model):
         return '%s/%s de:%s. Fecha: %s' % (self.forum.name, self.name, self.author, self.submit_date)
 
 
-class Comment(models.Model):
+class Reply(models.Model):
     author = models.ForeignKey(User)
-    message = models.TextField(max_lenght=1000)
+    message = models.TextField(max_length=1000)
     submit_date = models.DateTimeField()
     
     def __str__(self):
