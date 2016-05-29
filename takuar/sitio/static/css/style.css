@@ -44,12 +44,19 @@
 }
 
 /* Cajas usuarios */
+#user-search-list {
+  background-color:#EEEEEE;
+  margin-top:1vh;
+  min-height:30vh;
+  padding:1vh;
+  overflow:auto;
+}
 .user-box {
   background-color:#EEEEEE;
   border:solid 2px #AAAAAA;
   padding: 0.4rem;
-  display:flex;
   text-align:center;
+  display: inline-flex;
 }
 .add-button {
   margin:10px 0px;
