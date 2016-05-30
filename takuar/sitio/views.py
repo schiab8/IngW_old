@@ -65,11 +65,15 @@ def reportUser(request):
         
 def userProfile(request):
     if request.method == "GET":
+        data = {}
         if 'user' in request.GET:
             user_profile = UserProfile.objects.get(userAuth__username=request.GET['user'])
         else:
             user_profile = UserProfile.objects.get(userAuth=request.user)
-        return render(request, 'user_profile.html', {'userProfile':user_profile})
+            groups = Group.objects.filter(creator=request.user)
+            data['groups']=groups
+        data['userProfile']=user_profile
+        return render(request, 'user_profile.html', data)
 
 def newGroup(request):
     if request.method == "GET": 
