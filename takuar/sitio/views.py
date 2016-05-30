@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from sitio.models import Event, EventComment, Picture, UserProfile, Invitation
+from sitio.models import Event, EventComment, Picture, UserProfile, Invitation, Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from sitio.forms import FormEvent, FormEventComment, FormReportUser
+from sitio.forms import FormEvent, FormEventComment, FormReportUser, FormGroup
 from django.http import HttpResponseRedirect, HttpResponse
 from datetime import datetime
 
@@ -73,7 +73,18 @@ def userProfile(request):
 
 def newGroup(request):
     if request.method == "GET": 
-        return render(request, 'newGroup.html')
+        form = FormGroup(initial={'creator':request.user})
+    else:
+        form = FormGroup(request.POST)
+        if form.is_valid():
+            print '>>>>>>'+ str(type(form.cleaned_data['event_select']))
+            group = Group(creator=request.user, event=form.cleaned_data['event_select'])
+            group.save()
+            invitation = Invitation(group=group, userAuth=form.cleaned_data['user_select'])
+            invitation.save()
+            return HttpResponse('Grupo creado')
+    return render(request, 'newGroup.html', {'form':form})
+        
 
 def searchUser(request):
     if request.method == "GET":

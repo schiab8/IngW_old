@@ -1,5 +1,6 @@
 from django import forms
-from sitio.models import Event, EventComment, UserReport
+from sitio.models import Event, EventComment, UserReport, Group
+from django.contrib.auth.models import User
 from functools import partial
 
 
@@ -37,3 +38,11 @@ class FormReportUser(forms.ModelForm):
                 'submit_date':forms.HiddenInput(),
                 }
         
+class FormGroup(forms.Form):
+    event_query= Event.objects.all()
+    event_select = forms.ModelChoiceField(queryset=event_query)
+    users_query = User.objects.all()
+    user_select = forms.ModelChoiceField(queryset=users_query)
+
+
+
