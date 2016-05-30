@@ -1,5 +1,5 @@
 from django import forms
-from sitio.models import Event, EventComment, UserReport, Group
+from sitio.models import Event, EventComment, UserReport, Group, Invitation
 from django.contrib.auth.models import User
 from functools import partial
 
@@ -44,5 +44,11 @@ class FormGroup(forms.Form):
     users_query = User.objects.all()
     user_select = forms.ModelChoiceField(queryset=users_query)
 
-
-
+class FormInvitation(forms.ModelForm):
+    class Meta:
+        model = Invitation
+        exclude = []
+        widgets = {'accepted': forms.HiddenInput(),
+                   'group': forms.HiddenInput(),
+                   'userAuth': forms.HiddenInput(),
+                   }

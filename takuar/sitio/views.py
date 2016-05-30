@@ -1,11 +1,13 @@
 from django.shortcuts import render
-from sitio.models import Event, EventComment, Picture, UserProfile, Invitation, Group
+from sitio.models import Event, EventComment, Picture, UserProfile, Invitation, Group, Meeting
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from sitio.forms import FormEvent, FormEventComment, FormReportUser, FormGroup
+from sitio.forms import FormEvent, FormEventComment, FormReportUser, FormGroup, FormInvitation
 from django.http import HttpResponseRedirect, HttpResponse
 from datetime import datetime
+
+from django.forms import modelformset_factory
 
 
 # Create your views here.
@@ -14,9 +16,31 @@ def test(request): #Testeando Bootstrap
 
 @login_required
 def home(request):
+    if request.method == "POST":
+        form = FormInvitation(request.POST)
+        if form.is_valid():
+            try:
+                invitation = Invitation.objects.filter(userAuth=request.user).get(group=form.group)
+            except:
+                return HttpResponse('Invalido')
+            invitation.accepted = True
+            invitation.save(commit=False)
+            cant_invitations = Invitation.objects.filter(group=invitation.group).count()
+            cant_accepted = Invitation.objects.filter(group=invitation.group).filter(accepted=True).count()
+            if cant_invitations == cant_accepted:
+                invitation.group.allConfirmed=True
+                possible_groups = Group.objects.filter(allConfirmed=True).filter(waiting=True)
+                if possible_groups.count()>0:
+                    meeting = Meeting()
+                    possible_groups[0].meeting = meeting
+                    invitation.group.meeting = meeting
+                    invitation.group.waiting=False
+                    possible_groups[0].waiting = False
+
     now = datetime.now()
     events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
     return render(request, 'inicio.html', {'events_list': events, 'user':request.user})
+
 
 def addEvent(request):
     if request.method == "GET":
@@ -81,7 +105,6 @@ def newGroup(request):
     else:
         form = FormGroup(request.POST)
         if form.is_valid():
-            print '>>>>>>'+ str(type(form.cleaned_data['event_select']))
             group = Group(creator=request.user, event=form.cleaned_data['event_select'])
             group.save()
             invitation = Invitation(group=group, userAuth=form.cleaned_data['user_select'])
@@ -97,6 +120,7 @@ def searchUser(request):
 
 def getInvitations(request):
     if request.method == "GET":
-        invitations = Invitation.objects.filter(userAuth=request.user)
-        print invitations
-        return render(request, 'invitation_list.html', {'invitations':invitations})
+        InvitationsFormSet = modelformset_factory(Invitation, form = FormInvitation)
+        invitations=Invitation.objects.filter(userAuth=request.user)
+        formset = InvitationsFormSet(queryset=invitations)
+        return render(request, 'invitation_list.html', {'invitations':zip(invitations,formset)})

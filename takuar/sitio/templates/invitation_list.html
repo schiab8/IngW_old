@@ -1,7 +1,11 @@
-{% for invitation in invitations %} 
-    <div class="invitation">
-        <h5>Invitación a:{{ invitation.group.event }}</h5>        
-        <p>de: {{ invitation.group.creator }}</p>
-        <button class="btn btn-default accept-button">aceptar</button>
-    </div>
+{% for invitation,form in invitations %}
+<div class="invitation">
+    <h4>Invitación a:{{ invitation.group.event }}</h4>        
+    <p>de: {{ invitation.group.creator }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-default accept-button" value="Aceptar">
+    </form>
+</div>
 {% endfor %}

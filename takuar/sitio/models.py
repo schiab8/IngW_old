@@ -65,20 +65,20 @@ class Event(models.Model):
     def __str__(self):
         return self.eventName
 
+class Meeting(models.Model):
+    picture = models.ForeignKey(Picture)
+
 class Group(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL)
     event = models.ForeignKey(Event)
     allConfirmed = models.BooleanField(default=False) #True cuando se confirman las invitaciones
     waiting = models.BooleanField(default=True) #False cuando se encuentra coincidencia de grupos
+    meeting = models.ForeignKey(Meeting, blank=True)
 
 class Invitation(models.Model):
     group = models.ForeignKey(Group)
     userAuth = models.ForeignKey(settings.AUTH_USER_MODEL)
     accepted = models.BooleanField(default=False)
-
-class Meeting(models.Model):
-    group = models.ManyToManyField(Group)
-    picture = models.ForeignKey(Picture)
 
 class Answer(models.Model): #Modelo temporalmente  en desuso. Los grupos se unen automaticamente sin aceptarse uno a otro
     group1 = models.ForeignKey(Group, null=False, blank=False, related_name='from+')
