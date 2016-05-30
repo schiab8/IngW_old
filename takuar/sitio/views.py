@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sitio.models import Event, EventComment, Picture, UserProfile
+from sitio.models import Event, EventComment, Picture, UserProfile, Invitation
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
@@ -79,3 +79,9 @@ def searchUser(request):
     if request.method == "GET":
         user_list = UserProfile.objects.filter(userAuth__username__startswith=request.GET['text'])
         return render(request, 'user_list.html',{'user_list':user_list})
+
+def getInvitations(request):
+    if request.method == "GET":
+        invitations = Invitation.objects.filter(userAuth=request.user)
+        print invitations
+        return render(request, 'invitation_list.html', {'invitations':invitations})

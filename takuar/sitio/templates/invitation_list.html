@@ -1,0 +1,7 @@
+{% for invitation in invitations %} 
+    <div class="invitation">
+        <h5>Invitación a:{{ invitation.group.event }}</h5>        
+        <p>de: {{ invitation.group.creator }}</p>
+        <button class="btn btn-default accept-button">aceptar</button>
+    </div>
+{% endfor %}

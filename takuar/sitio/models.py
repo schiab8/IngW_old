@@ -32,14 +32,6 @@ class Picture(models.Model):
     def __str__(self):
         return self.caption
 
-class Group(models.Model):
-    pass
-    '''user1 =  models.ForeignKey(User, null=False, blank=False, related_name='creator')
-    user2 =  models.ForeignKey(User, null=False, blank=False, related_name='second')
-    user3 =  models.ForeignKey(User, null=True, blank=True, related_name='third')
-    user4 =  models.ForeignKey(User, null=True, blank=True, related_name='fourth')
-    user5 =  models.ForeignKey(User, null=True, blank=True, related_name='fifth')'''
-
 class UserProfile(models.Model):
     userAuth = models.OneToOneField(settings.AUTH_USER_MODEL)
     name = models.CharField(max_length=50)
@@ -50,7 +42,6 @@ class UserProfile(models.Model):
     idType = models.ForeignKey(UserType, null=False, blank=False)
     email = models.CharField(max_length=50, blank=True)
     contact = models.CharField(max_length=200, blank=True)
-    group = models.ManyToManyField(Group, blank=True)
 
     def __str__(self):
         return self.name +' '+ self.lastName
@@ -74,14 +65,22 @@ class Event(models.Model):
     def __str__(self):
         return self.eventName
 
+class Group(models.Model):
+    creator = models.ForeignKey(settings.AUTH_USER_MODEL)
+    event = models.ForeignKey(Event)
+    allConfirmed = models.BooleanField(default=False) #True cuando se confirman las invitaciones
+    waiting = models.BooleanField(default=True) #False cuando se encuentra coincidencia de grupos
+
+class Invitation(models.Model):
+    group = models.ForeignKey(Group)
+    userAuth = models.ForeignKey(settings.AUTH_USER_MODEL)
+    accepted = models.BooleanField(default=False)
+
 class Meeting(models.Model):
     group = models.ManyToManyField(Group)
     picture = models.ForeignKey(Picture)
-    event = models.ForeignKey(Event, null=False, blank=False)
-    '''group1 = models.ForeignKey(Group, null=False, blank=False, related_name='+')
-    group2 = models.ForeignKey(Group, null=False, blank=False, related_name='+')'''
 
-class Answer(models.Model):
+class Answer(models.Model): #Modelo temporalmente  en desuso. Los grupos se unen automaticamente sin aceptarse uno a otro
     group1 = models.ForeignKey(Group, null=False, blank=False, related_name='from+')
     group2 = models.ForeignKey(Group, null=False, blank=False, related_name='to')
     answer = models.BooleanField(default=False)

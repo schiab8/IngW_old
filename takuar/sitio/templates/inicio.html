@@ -2,21 +2,34 @@
 {% load staticfiles %}
 
 {% block header %}
+<header></header>
 {% endblock %}
 
 {% block content %}
-<h1 id="title">{% block titulo %}Home{% endblock %}</h1>
-<a href='addEvent'>Crear evento!</a>
+<div class="container">
+    <div class="row">
+        <button class="btn btn-default" id="toggle-invitations">Ver invitaciones</button>
+        <div id="invitations-list"></div>
+    </div>
+    <div class="col-md-12">
+        <h1 id="title">{% block titulo %}Home{% endblock %}</h1>
+        <a href='addEvent'>Crear evento!</a>
 
-<h2> Próximos eventos: </h2>
-{% for event in events_list %}
-    <h2>-------------------------------</h2>
-    <h2>{{ event.eventName }} </h2>
-    <h3>{{ event.fecha }} {{ event.startTime }} </h3>
-    <h4> Organizado por: {{ event.organizer }} </h4>
-    <p>{{ event.id }} </p>
-    <a href='details?event={{ event.id }}'>Más información...</a>
-{% endfor %}
-<div id="user_search_list"></div>
+        <h2> Próximos eventos: </h2>
+        {% for event in events_list %}
+        <h2>-------------------------------</h2>
+        <h2>{{ event.eventName }} </h2>
+        <h3>{{ event.fecha }} {{ event.startTime }} </h3>
+        <h4> Organizado por: {{ event.organizer }} </h4>
+        <p>{{ event.id }} </p>
+        <a href='details?event={{ event.id }}'>Más información...</a>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
-
+{% block extra_js %}
+<script>
+    var url_get_invitations = "{% url 'sitio.views.getInvitations' %}";
+</script>
+<script src="{% static 'js/invitations_ajax.js' %}"></script>
+{% endblock %}
