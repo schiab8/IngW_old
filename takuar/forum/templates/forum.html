@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <h1>Threads del foro '{{ threads.0.forum.name }}'</h1>
+    </div>
+    {% for thread in threads %}
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <div class="thread-box">
+                    <h2><a href="/thread?id={{thread.id}}">{{thread.name}}</a> <small>({{thread.author}})</small></h2> </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class=row>
+        <div class="col-md-10 col-md-offset-1">
+            <h3>Nuevo Thread:</h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Enviar"/>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

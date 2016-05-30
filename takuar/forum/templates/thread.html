@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 col-md-offset-1">
+            <h3>{{ thread.author.username }}</h3>
+            <h4>{{thread.submit_date}}</h4>
+        </div>
+        <div class="col-md-7">
+            <h1>{{thread.name}}</h1>
+            <div>{{thread.content}}</div>
+        </div>
+    </div>
+    {% for reply in replies %}
+        <div class="row reply-box">
+            <div class="col-md-3 col-md-offset-1">
+                <h2>{{reply.author}} dice:</h2>
+            
+            </div>
+            <div class="col-md-7">
+                <div>
+                    {{reply.message}}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <h3>Responder: </h3>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Enviar"/>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

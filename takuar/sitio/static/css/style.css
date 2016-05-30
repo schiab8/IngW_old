@@ -71,3 +71,14 @@
   border:solid 2px #AAAAAA;
   display: inline-block;
 }
+
+
+.reply-box {
+  margin:10px 0px;
+  background-color: #aaffff;
+}
+
+.thread-box {
+  border: solid 2px black;
+  margin:4px;
+}

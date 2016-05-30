@@ -36,6 +36,8 @@ def home(request):
                     invitation.group.meeting = meeting
                     invitation.group.waiting=False
                     possible_groups[0].waiting = False
+        else:
+            print form.errors
 
     now = datetime.now()
     events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
