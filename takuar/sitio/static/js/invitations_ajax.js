@@ -7,6 +7,6 @@ function update_invitations_list(data,options) {
 }
 
 $('#toggle-invitations').click(function() {
-    get_invitations();
     $('#invitations-list').toggle();
+    get_invitations();
 });

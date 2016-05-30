@@ -13,7 +13,9 @@
     </div>
     <div class="col-md-12">
         <h1 id="title">{% block titulo %}Home{% endblock %}</h1>
-        <a href='addEvent'>Crear evento!</a>
+        <a href="/newGroup">Organizar salida</a>
+        <p></p>
+        <a href='/addEvent'>Crear evento!</a>
 
         <h2> Próximos eventos: </h2>
         {% for event in events_list %}
@@ -30,6 +32,7 @@
 {% block extra_js %}
 <script>
     var url_get_invitations = "{% url 'sitio.views.getInvitations' %}";
+    $("#invitations-list").toggle();
 </script>
 <script src="{% static 'js/invitations_ajax.js' %}"></script>
 {% endblock %}
