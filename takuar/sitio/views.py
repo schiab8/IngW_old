@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from sitio.forms import FormEvent, FormEventComment, FormReportUser, FormGroup, FormInvitation
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from datetime import datetime
 
 from django.forms import modelformset_factory
@@ -16,28 +16,27 @@ def test(request): #Testeando Bootstrap
 
 @login_required
 def home(request):
-    if request.method == "POST":
-        form = FormInvitation(request.POST)
-        if form.is_valid():
-            try:
-                invitation = Invitation.objects.filter(userAuth=request.user).get(group=form.group)
-            except:
-                return HttpResponse('Invalido')
-            invitation.accepted = True
-            invitation.save(commit=False)
-            cant_invitations = Invitation.objects.filter(group=invitation.group).count()
-            cant_accepted = Invitation.objects.filter(group=invitation.group).filter(accepted=True).count()
-            if cant_invitations == cant_accepted:
-                invitation.group.allConfirmed=True
-                possible_groups = Group.objects.filter(allConfirmed=True).filter(waiting=True)
-                if possible_groups.count()>0:
-                    meeting = Meeting()
-                    possible_groups[0].meeting = meeting
-                    invitation.group.meeting = meeting
-                    invitation.group.waiting=False
-                    possible_groups[0].waiting = False
-        else:
-            print form.errors
+        # if form.is_valid():
+        #     try:
+        #         invitation = Invitation.objects.filter(userAuth=request.user).get(group=form.group)
+        #     except:
+        #         return HttpResponse('Invalido')
+        #     invitation.accepted = True
+        #     invitation.save(commit=False)
+        #     cant_invitations = Invitation.objects.filter(group=invitation.group).count()
+        #     cant_accepted = Invitation.objects.filter(group=invitation.group).filter(accepted=True).count()
+        #     if cant_invitations == cant_accepted:
+        #         invitation.group.allConfirmed=True
+        #         possible_groups = Group.objects.filter(allConfirmed=True).filter(waiting=True)
+        #         if possible_groups.count()>0:
+        #             meeting = Meeting()
+        #             possible_groups[0].meeting = meeting
+        #             invitation.group.meeting = meeting
+        #             invitation.group.waiting=False
+        #             possible_groups[0].waiting = False
+        # else:
+        #     print form.cleaned_data
+        #     print form.errors
 
     now = datetime.now()
     events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
@@ -122,7 +121,18 @@ def searchUser(request):
 
 def getInvitations(request):
     if request.method == "GET":
-        InvitationsFormSet = modelformset_factory(Invitation, form = FormInvitation)
-        invitations=Invitation.objects.filter(userAuth=request.user)
-        formset = InvitationsFormSet(queryset=invitations)
-        return render(request, 'invitation_list.html', {'invitations':zip(invitations,formset)})
+        invitations=Invitation.objects.filter(userAuth=request.user, accepted=False)
+        return render(request, 'invitation_list.html', {'invitations':invitations})
+
+def acceptInvitation(request):
+    if request.method == "POST":
+        try: 
+            id = request.POST.get('invitation_id')
+            invitation = Invitation.objects.get(pk = id)
+            print"invitation:", invitation
+            if invitation.userAuth == request.user:
+                invitation.accepted = True
+                invitation.save()
+                return HttpResponse('OK!')
+        except ObjectDoesNotExist:
+            return HttpResponse("No existe")

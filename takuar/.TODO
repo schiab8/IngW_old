@@ -17,7 +17,7 @@
 [*] Chat.
 [X] En el modelo de datos, no se ve muy bien cómo pertenecen usuarios a grupos, cómo se guardan las invitaciones de usuarios a grupos y las coincidencias encontradas con otros grupos.
 [*] En el flujo de estados: solo es posible eliminar eventos si fueron denunciados?.
-[*] Foro o equivalente (contenido, discusión).
+[X] Foro o equivalente (contenido, discusión).
 [-] Carga de fotos.
 [-] Edición de perfiles.
 [-] Filtros de eventos (por zona, eventos pasados, los que vienen, los mas acudidos, etc)

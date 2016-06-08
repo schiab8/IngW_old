@@ -39,4 +39,5 @@ urlpatterns = [
     url(r'^get_invitations', 'sitio.views.getInvitations'),
     url(r'^forum','forum.views.forumHome'),
     url(r'^thread','forum.views.viewThread'),
+    url(r'^invitation_accept/', 'sitio.views.acceptInvitation'),
 ]

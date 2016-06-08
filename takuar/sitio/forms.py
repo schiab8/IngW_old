@@ -48,7 +48,3 @@ class FormInvitation(forms.ModelForm):
     class Meta:
         model = Invitation
         exclude = []
-        widgets = {'accepted': forms.HiddenInput(),
-                   'group': forms.HiddenInput(),
-                   'userAuth': forms.HiddenInput(),
-                   }

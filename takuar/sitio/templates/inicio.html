@@ -33,6 +33,7 @@
 <script>
     var url_get_invitations = "{% url 'sitio.views.getInvitations' %}";
     $("#invitations-list").toggle();
+    var url_accept_invitation = "{% url 'sitio.views.acceptInvitation' %}";
 </script>
 <script src="{% static 'js/invitations_ajax.js' %}"></script>
 {% endblock %}
