@@ -66,7 +66,7 @@ class Event(models.Model):
         return self.eventName
 
 class Meeting(models.Model):
-    picture = models.ForeignKey(Picture)
+    picture = models.ForeignKey(Picture, blank=True, null=True)
 
 class Group(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL)
@@ -77,6 +77,17 @@ class Group(models.Model):
 
     def __str__(self):
         return "Grupo de: %s" % self.creator
+    
+    def checkConfirmed(self):
+        cant_invitations = Invitation.objects.filter(group=self).count()
+        cant_accepted = Invitation.objects.filter(group=self).filter(accepted=True).count()
+        if cant_invitations == cant_accepted:
+            #Si estan todos confirmados cambio el estado  
+            self.allConfirmed=True
+            self.save()
+            return True
+        return False
+
 
 class Invitation(models.Model):
     group = models.ForeignKey(Group)
@@ -84,7 +95,7 @@ class Invitation(models.Model):
     accepted = models.BooleanField(default=False)
 
     def __str__(self):
-        return "Invitacion de %s" % self.group.creator
+        return "Invitacion de %s a %s" % (self.group.creator, self.userAuth)
 
 class Answer(models.Model): #Modelo temporalmente  en desuso. Los grupos se unen automaticamente sin aceptarse uno a otro
     group1 = models.ForeignKey(Group, null=False, blank=False, related_name='from+')

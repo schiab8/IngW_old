@@ -16,27 +16,6 @@ def test(request): #Testeando Bootstrap
 
 @login_required
 def home(request):
-        # if form.is_valid():
-        #     try:
-        #         invitation = Invitation.objects.filter(userAuth=request.user).get(group=form.group)
-        #     except:
-        #         return HttpResponse('Invalido')
-        #     invitation.accepted = True
-        #     invitation.save(commit=False)
-        #     cant_invitations = Invitation.objects.filter(group=invitation.group).count()
-        #     cant_accepted = Invitation.objects.filter(group=invitation.group).filter(accepted=True).count()
-        #     if cant_invitations == cant_accepted:
-        #         invitation.group.allConfirmed=True
-        #         possible_groups = Group.objects.filter(allConfirmed=True).filter(waiting=True)
-        #         if possible_groups.count()>0:
-        #             meeting = Meeting()
-        #             possible_groups[0].meeting = meeting
-        #             invitation.group.meeting = meeting
-        #             invitation.group.waiting=False
-        #             possible_groups[0].waiting = False
-        # else:
-        #     print form.cleaned_data
-        #     print form.errors
 
     now = datetime.now()
     events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
@@ -129,10 +108,38 @@ def acceptInvitation(request):
         try: 
             id = request.POST.get('invitation_id')
             invitation = Invitation.objects.get(pk = id)
-            print"invitation:", invitation
+            print "invitation:", invitation
             if invitation.userAuth == request.user:
                 invitation.accepted = True
                 invitation.save()
+                print "Todos confirmados:", invitation.group.checkConfirmed()
+                group = invitation.group
+                if invitation.group.checkConfirmed():
+                    # Busco grupos iguales. Si hay, creo una meeting y la agrego a los dos grupos. Excluyo mi grupo
+                    possible_groups = Group.objects.filter(allConfirmed=True).filter(waiting=True).exclude(pk=group.pk)
+                    if possible_groups.count()>0:
+
+                        other = possible_groups[0]
+
+                        meeting = Meeting()
+                        meeting.save()
+                        group.meeting = meeting
+                        other.meeting = meeting
+
+                        group.waiting=False
+                        other.waiting = False
+                        group.save()
+                        other.save()
+                        print "Grupo encontrado"
+                        return HttpResponse('Grupo encontrado: ', other)
+                    else:
+                        print "Esperando coincidencias"
+                        return HttpResponse('Esperando coincidencias')
+                print  "Aceptada, pero no todos confirmaron"
                 return HttpResponse('OK!')
-        except ObjectDoesNotExist:
-            return HttpResponse("No existe")
+            print "El usuario no corresponde al gupo"
+            return HttpResponse('El usuario no corresponde al grupo')
+        except Exception as e:
+            print '%s (%s)' % (e.message, type(e))
+            print "Error alguno"
+            return HttpResponse('Error')
