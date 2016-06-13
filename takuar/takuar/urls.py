@@ -13,10 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, patterns
 from django.contrib import admin
 from django.contrib.auth import views
 from django.views.generic.edit import CreateView
+
+from django.conf import settings
 
 from users.views import user_registration_view
 from sitio.views import userProfile
@@ -41,3 +43,13 @@ urlpatterns = [
     url(r'^thread','forum.views.viewThread'),
     url(r'^invitation_accept/', 'sitio.views.acceptInvitation'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.MEDIA_ROOT,
+        }),
+        url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
+            'document_root': settings.STATIC_ROOT,
+        }),
+)

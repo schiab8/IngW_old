@@ -26,8 +26,9 @@ class UserType(models.Model):
         return self.category
 
 class Picture(models.Model):
-    image = models.ImageField()
+    image = models.ImageField(upload_to='pics')
     caption = models.CharField(max_length=200)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def __str__(self):
         return self.caption
