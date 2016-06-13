@@ -24,13 +24,13 @@
     {% endblock %}
 
     {% block navbar %}
-    <nav class="navbar navbar-inverse">
+    <nav id="nav" class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">TAKUAR</a>
             </div>
             <ul class="nav navbar-nav">
-                <li id="home-nav" class="active"><a href="/">Home</a></li>        
+                <li id="home-nav"><a href="/">Home</a></li>        
                 <li id="events-nav"><a href="#">Eventos</a></li>
                 <li id="forums-nav"><a href="/forum">Foros</a></li>
             </ul>
@@ -45,7 +45,20 @@
     {% block content %}
     {% endblock %}
 
+    <script>
+        $(function() {
+            var pgurl = window.location.pathname;
+            console.log(pgurl);
+            $("#nav div ul li a").each(function(){
+            console.log($(this).attr("href"));
+            if($(this).attr("href") == pgurl || $(this).attr("href") == '' )
+                $(this).parent().addClass("active");
+            })
+        });
+    </script>
+
     {% block extra_js %}
     {% endblock %}
+
 </body>
 </html>
