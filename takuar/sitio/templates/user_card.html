@@ -1,0 +1,10 @@
+<div class="user-card">
+    <div class="hidden-xs col-sm-5" >
+        {% if user.profilePic %}
+            <img class="img-circle img-responsive profile-pic"src="{{ user.profilePic.image.url }}" >
+        {% endif %}
+    </div>
+    <div class="col-sm-7">
+        <h4 class="user-name">{{ user.name }} {{ user.lastName }} <small>(<a href="profile?user={{ user.userAuth.username }}">{{ user.userAuth.username }}</a>)</small></h4>
+    </div>
+</div>

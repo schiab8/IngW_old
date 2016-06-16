@@ -57,6 +57,8 @@
   border:solid 2px #AAAAAA;
   padding: 0.4rem;
   display: inline-block;
+  max-width:40%;
+  min-width:35%;
 }
 .add-button {
   margin:10px 0px;
@@ -70,6 +72,8 @@
 .invitation {
   border:solid 2px #AAAAAA;
   display: inline-block;
+}
+.profile-pic {
 }
 
 
