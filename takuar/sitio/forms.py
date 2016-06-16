@@ -39,10 +39,20 @@ class FormReportUser(forms.ModelForm):
                 }
         
 class FormGroup(forms.Form):
-    event_query= Event.objects.all()
-    event_select = forms.ModelChoiceField(queryset=event_query)
-    users_query = User.objects.all()
-    user_select = forms.ModelChoiceField(queryset=users_query)
+    event_id = forms.IntegerField(widget=forms.HiddenInput())
+
+    def __init__(self, *args, **kwargs):
+        # invite = kwargs.pop('extra')
+        super(FormGroup, self).__init__(*args, **kwargs)
+        if args:
+            for label, value in args[0].items():
+                if label.startswith('user_'):
+                    self.fields[label] = forms.IntegerField(value[0])
+
+    def users(self):
+        for name, value in self.cleaned_data.items():
+            if name.startswith('user_'):
+                yield (self.fields[name].label, value)
 
 class FormInvitation(forms.ModelForm):
     class Meta:

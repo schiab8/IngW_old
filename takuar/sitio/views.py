@@ -16,12 +16,12 @@ def test(request): #Testeando Bootstrap
 
 @login_required
 def home(request):
-
     now = datetime.now()
     events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
     return render(request, 'inicio.html', {'events_list': events, 'user':request.user})
 
 
+@login_required
 def addEvent(request):
     if request.method == "GET":
         mi_form = FormEvent(initial={'organizer':request.user})
@@ -54,6 +54,7 @@ def detailsEvent(request):
             return HttpResponse('Comentario posteado')
         return render(request, 'infoEvent.html', {'event':event, 'form_comment': form, 'comments': event_comments})
 
+@login_required
 def reportUser(request):
     if request.method == "GET":
         now = datetime.now()
@@ -79,16 +80,15 @@ def userProfile(request):
         data['userProfile']=user_profile
         return render(request, 'user_profile.html', data)
 
+@login_required
 def newGroup(request):
     if request.method == "GET": 
-        form = FormGroup(initial={'creator':request.user})
+        form = FormGroup()
     else:
         form = FormGroup(request.POST)
         if form.is_valid():
-            group = Group(creator=request.user, event=form.cleaned_data['event_select'])
-            group.save()
-            invitation = Invitation(group=group, userAuth=form.cleaned_data['user_select'])
-            invitation.save()
+            event_id = form.cleaned_data['event_id']
+            group = Group(creator=request.user, event=Event.objects.get(pk=event_id))
             return HttpResponse('Grupo creado')
     return render(request, 'newGroup.html', {'form':form})
         
@@ -98,11 +98,13 @@ def searchUser(request):
         user_list = UserProfile.objects.filter(userAuth__username__startswith=request.GET['text'])
         return render(request, 'user_list.html',{'user_list':user_list})
 
+@login_required
 def getInvitations(request):
     if request.method == "GET":
         invitations=Invitation.objects.filter(userAuth=request.user, accepted=False)
         return render(request, 'invitation_list.html', {'invitations':invitations})
 
+@login_required
 def acceptInvitation(request):
     if request.method == "POST":
         try: 
