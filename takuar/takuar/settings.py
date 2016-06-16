@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'users',
     'sitio',
     'forum',
-    'django_extensions',
 ]
 
 MIDDLEWARE_CLASSES = [
