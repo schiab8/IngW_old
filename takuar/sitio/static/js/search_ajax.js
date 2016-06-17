@@ -6,10 +6,12 @@ function get_user_list() {
 function update_users_search_list(data,options) {
     $('#user-search-list').html(data);
     $('.add-button').click(function() {
-        var $user = $(this).parent().clone();
-        $user.children('.add-button').addClass('remove-button btn-danger').removeClass('add-button btn-success').text('Quitar');
-        $('#guests').append($user);
-        update_guests();
+        if (get_guests_ids().length<4) {
+            var $user = $(this).parent().clone();
+            $user.children('.add-button').addClass('remove-button btn-danger').removeClass('add-button btn-success').text('Quitar');
+            $('#guests').append($user);
+            update_guests();
+        }
     });
 }
 function update_guests(){
@@ -25,12 +27,18 @@ function get_guests_ids(){
 };
 
 $('#group-form').submit(function(e){
-    e.preventDefault();
     var guest_string = get_guests_ids().join(',');
-    console.log(guest_string);
-    console.log($('#group-form input[name="guests_ids"]'));
     $('#group-form input[name="guests_ids"]').val(guest_string);
-    return false;
+    console.log($('#selected_event').text());
+    $('#group-form input[name="event_id"]').val($('#selected_event').text());
+    if (get_guests_ids().length<5){
+        return true;
+    }
+    else{
+        console.log(get_guests_ids());
+        $('#group-form').prepend('<span>Demasiados invitados</span>');
+        return false;
+    }
 });
 
 

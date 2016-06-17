@@ -82,15 +82,26 @@ def userProfile(request):
 
 @login_required
 def newGroup(request):
+    data = {}
     if request.method == "GET": 
+        if 'event' in request.GET:
+            try:
+                id = request.GET.get('event')
+                event = Event.objects.get(pk = id)
+                data['event'] = event
+
+            except Exception as e:
+                print '%s (%s)' % (e.message, type(e))
         form = FormGroup()
     else:
         form = FormGroup(request.POST)
         if form.is_valid():
+            print form.cleaned_data['guests_ids']
             event_id = form.cleaned_data['event_id']
             group = Group(creator=request.user, event=Event.objects.get(pk=event_id))
             return HttpResponse('Grupo creado')
-    return render(request, 'newGroup.html', {'form':form})
+    data['form'] = form
+    return render(request, 'newGroup.html', data)
         
 
 def searchUser(request):
