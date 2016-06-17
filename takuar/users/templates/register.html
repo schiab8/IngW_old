@@ -4,7 +4,7 @@
 </head>
 <body>
 {% block content %}
-    <form method="post" action=".">{% csrf_token %}
+    <form method="post" enctype='multipart/form-data' action=".">{% csrf_token %}
         <table border="0">
             {{ form.as_table }}
         </table>

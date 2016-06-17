@@ -5,7 +5,7 @@ from users.forms import UserRegisterForm
 
 def user_registration_view(request):
     if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
+        form = UserRegisterForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/')

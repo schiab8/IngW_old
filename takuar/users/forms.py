@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User
-from sitio.models import Gender, UserType, UserProfile
+from sitio.models import Gender, UserType, UserProfile, Picture
 
 class UserRegisterForm(forms.Form):
     name = forms.CharField(min_length=3, max_length=50)
@@ -42,8 +42,15 @@ class UserRegisterForm(forms.Form):
         userAuth = User(username=data['username'])
         userAuth.set_password(data['password'])
         userAuth.save()
-        userProfile = UserProfile(userAuth = userAuth, name=data['name'], profilePic=data['profilePic'], lastName=data['lastName'],
+        userProfile = UserProfile(userAuth = userAuth, name=data['name'], lastName=data['lastName'],
             birth=data['birth'], gender=data['gender'], idType=utype, email=data['email'])
+
+        if data['profilePic']:
+            print data['profilePic']
+            pic = Picture(image = data['profilePic'], owner = userAuth)
+            pic.save()
+            userProfile.profilePic = pic
         userProfile.save()
+
         print "username: %s, password: %s, email: %s" % (userAuth, userAuth.password, userAuth.email)
         print "userProfile: %s" % userProfile
