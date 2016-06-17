@@ -3,6 +3,17 @@ function get_user_list() {
     $.ajax({url: url_search_user, data:"text="+name}).done(update_users_search_list);
 }
 
+function get_event_list() {
+    $.ajax({url: url_get_events}).done(update_events_list);
+}
+function update_events_list(data, options) {
+    $('#events-list').html(data);
+    $('.event-box').click( function(){
+        var $new_event = $(this).children('.event-card').clone();
+        $('#selected-event').html($new_event);
+    });
+}
+
 function update_users_search_list(data,options) {
     $('#user-search-list').html(data);
     $('.add-button').click(function() {
@@ -29,8 +40,7 @@ function get_guests_ids(){
 $('#group-form').submit(function(e){
     var guest_string = get_guests_ids().join(',');
     $('#group-form input[name="guests_ids"]').val(guest_string);
-    console.log($('#selected_event').text());
-    $('#group-form input[name="event_id"]').val($('#selected_event').text());
+    $('#group-form input[name="event_id"]').val($('#selected-event .event-card .event-id').text());
     if (get_guests_ids().length<5){
         return true;
     }
@@ -44,4 +54,9 @@ $('#group-form').submit(function(e){
 
 $('#search-button').click(function() {
     get_user_list();
+});
+
+
+$( document ).ready(function() {
+    get_event_list();
 });

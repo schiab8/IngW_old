@@ -1,0 +1,5 @@
+{% for event in event_list %}
+    <div class="event-box">
+        {% include "event_card.html" with event=event %}
+    </div>
+{% endfor %}

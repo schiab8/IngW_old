@@ -116,6 +116,11 @@ def searchUser(request):
     if request.method == "GET":
         user_list = UserProfile.objects.filter(userAuth__username__startswith=request.GET['text']).exclude(userAuth = request.user)
         return render(request, 'user_list.html',{'user_list':user_list})
+def getEvents(request):
+    if request.method == "GET":
+        events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
+        print events
+        return render(request, 'events_list.html', {'event_list':events})
 
 @login_required
 def getInvitations(request):
