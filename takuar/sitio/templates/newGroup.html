@@ -11,6 +11,13 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div id="guests" style="background-color:steelblue; min-height:80;">
+
+            </div>
+        </div>
+    </div>
 
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -23,7 +30,7 @@
     </div>
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <form method='POST' class="text-right">
+            <form method='POST' id="group-form" class="text-right">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <input type='submit' class="btn btn-default" value='Crear grupo'/>
