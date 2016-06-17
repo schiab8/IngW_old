@@ -10,7 +10,7 @@
         </div>
         <div class="col-md-7">
             <h1>{{thread.name}}</h1>
-            <div>{{thread.content}}</div>
+            <div>{{thread.content|linebreaks}}</div>
         </div>
     </div>
     {% for reply in replies %}
@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-7">
                 <div>
-                    {{reply.message}}
+                    {{reply.message|linebreaks}}
                 </div>
             </div>
         </div>
