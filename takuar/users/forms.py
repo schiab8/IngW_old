@@ -7,7 +7,7 @@ class UserRegisterForm(forms.Form):
     name = forms.CharField(min_length=3, max_length=50)
     profilePic = forms.ImageField(required=False)
     lastName = forms.CharField(min_length = 2, max_length=50)
-    birth = forms.DateTimeField()
+    birth = forms.DateTimeField(widget=forms.SelectDateWidget(years=range(1950, 2016)))
     gender = forms.ModelChoiceField(queryset=Gender.objects.all())
     email = forms.EmailField()
     username = forms.CharField(min_length=5)
