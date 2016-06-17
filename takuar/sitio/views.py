@@ -96,17 +96,25 @@ def newGroup(request):
     else:
         form = FormGroup(request.POST)
         if form.is_valid():
-            print form.cleaned_data['guests_ids']
-            event_id = form.cleaned_data['event_id']
-            group = Group(creator=request.user, event=Event.objects.get(pk=event_id))
-            return HttpResponse('Grupo creado')
+            guest_ids = list(set(form.cleaned_data['guests_ids'].split(',')))
+            print guest_ids
+            if 0<len(guest_ids)<5:
+                users = User.objects.filter(pk__in = guest_ids)
+                print users
+                event_id = form.cleaned_data['event_id']
+                group = Group(creator=request.user, event=Event.objects.get(pk=event_id))
+                group.save()
+                for id in guest_ids:
+                    invitation = Invitation(group=group, userAuth=User.objects.get(pk=id))
+                    invitation.save()
+                return HttpResponse('Grupo creado')
     data['form'] = form
     return render(request, 'newGroup.html', data)
         
 
 def searchUser(request):
     if request.method == "GET":
-        user_list = UserProfile.objects.filter(userAuth__username__startswith=request.GET['text'])
+        user_list = UserProfile.objects.filter(userAuth__username__startswith=request.GET['text']).exclude(userAuth = request.user)
         return render(request, 'user_list.html',{'user_list':user_list})
 
 @login_required
