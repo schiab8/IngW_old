@@ -16,7 +16,7 @@
             <h2>Comentarios:</h2>
             {% for comment in comments %}
             <h4> {{ comment.user }} dice:</h4>
-            <p> {{ comment.comment }} </p>
+            <p> {{ comment.comment|linebreaks }} </p>
             {% if user != comment.user %}
             <a href='reportUser?user={{ comment.user.id}}'>Reportar</a>
             {% endif %}
