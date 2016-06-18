@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-3">
             {% if userProfile.profilePic %}
-            <img src="{{ userProfile.profilePic.image.url }}" >
+            <img class="img-responsive" src="{{ userProfile.profilePic.image.url }}" >
             {% endif %}
             <h2>{{ userProfile.name }} {{ userProfile.lastName }} <small>({{ userProfile.userAuth }}) </small></h2>
 
