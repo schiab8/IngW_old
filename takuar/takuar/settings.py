@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'users',
     'sitio',
     'forum',
@@ -120,6 +121,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 MEDIA_URL  ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
