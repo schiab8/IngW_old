@@ -11,11 +11,7 @@
 
     >>> PENDIENTES <<<
 
-[/] Crear grupo.
-[/] Invitaciones a grupos.
-[/] Relacionar grupos.
 [*] Chat.
-[X] En el modelo de datos, no se ve muy bien cómo pertenecen usuarios a grupos, cómo se guardan las invitaciones de usuarios a grupos y las coincidencias encontradas con otros grupos.
 [*] En el flujo de estados: solo es posible eliminar eventos si fueron denunciados?.
 [-] Carga de fotos.
 [-] Edición de perfiles.
@@ -28,3 +24,7 @@
 
 
     >>> COMPLETADOS <<<
+[X] En el modelo de datos, no se ve muy bien cómo pertenecen usuarios a grupos, cómo se guardan las invitaciones de usuarios a grupos y las coincidencias encontradas con otros grupos.
+[X] Crear grupo.
+[X] Invitaciones a grupos.
+[X] Relacionar grupos.

@@ -14,7 +14,6 @@ from django.forms import modelformset_factory
 def test(request): #Testeando Bootstrap
     return render(request, 'base.html')
 
-@login_required
 def home(request):
     now = datetime.now()
     events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
@@ -67,7 +66,7 @@ def reportUser(request):
             form.save()
             return HttpResponse('Reporte enviado')
         return render(request, ' reportUser.html', {'form':form, 'reported':reported})
-        
+
 def userProfile(request):
     if request.method == "GET":
         data = {}
@@ -83,7 +82,7 @@ def userProfile(request):
 @login_required
 def newGroup(request):
     data = {}
-    if request.method == "GET": 
+    if request.method == "GET":
         if 'event' in request.GET:
             try:
                 id = request.GET.get('event')
@@ -110,7 +109,7 @@ def newGroup(request):
                 return HttpResponse('Grupo creado')
     data['form'] = form
     return render(request, 'newGroup.html', data)
-        
+
 
 def searchUser(request):
     if request.method == "GET":
@@ -131,7 +130,7 @@ def getInvitations(request):
 @login_required
 def acceptInvitation(request):
     if request.method == "POST":
-        try: 
+        try:
             id = request.POST.get('invitation_id')
             invitation = Invitation.objects.get(pk = id)
             print "invitation:", invitation

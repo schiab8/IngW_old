@@ -11,14 +11,17 @@ class FormThread(forms.ModelForm):
                 }
         labels = {
                 'name':('Titulo del tema:'),
-                'content':('Contenido'),
+                'content':('Contenido:'),
                 }
 
 class FormReply(forms.ModelForm):
     class Meta:
         model=Reply
         exclude=['submit_date']
-        widgets = { 'author': forms.HiddenInput(), 'thread': forms.HiddenInput(),}
+        widgets = {
+                'author': forms.HiddenInput(), 
+                'thread': forms.HiddenInput(),
+                }
         labels = {
-                'message':('Respuesta'),
+                'message':('Respuesta:'),
                 }
