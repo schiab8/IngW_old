@@ -8,10 +8,12 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <button class="btn btn-default" id="toggle-invitations">Ver invitaciones</button>
-        <div id="invitations-list"></div>
+        <div class="col-md-12">
+            <button class="btn btn-default" id="toggle-invitations">Ver invitaciones</button>
+            <div id="invitations-list"></div>
+        </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-7 col-md-offset-1">
         <h1 id="title">{% block titulo %}Home{% endblock %}</h1>
         <a href="/newGroup">Organizar salida</a>
         <p></p>
@@ -25,6 +27,15 @@
         <h4> Organizado por: {{ event.organizer }} </h4>
         <p>{{ event.id }} </p>
         <a href='details?event={{ event.id }}'>Más información...</a>
+        {% endfor %}
+    </div>
+    <div class="col-md-3">
+        <h2>Foros más activos:</h2>
+        {% for forum in forums %}
+            <div class="forum-info">
+                <h3><a href="/forum?id={{forum.id}}">{{forum.name}}</a></h3>
+                <p>{{forum.cant_threads}} temas</p>
+            </div>
         {% endfor %}
     </div>
 </div>
