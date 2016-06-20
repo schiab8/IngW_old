@@ -46,7 +46,7 @@
                 <h2>Últimos temas:</h2>
                 {% for thread in threads %}
                 <div class="thread-info">
-                    <h4><a href="/thread?id={{thread.id}}">{{thread.name}}</a><small> (Autor: {{thread.author}})</small></h4>
+                    <h4><a href="/thread?id={{thread.id}}">{{thread.name}}</a><small> (Autor: {{thread.author}}) hace {{ thread.submit_date|timesince }}</small></h4>
                     <p>en: <a href="/forum?id={{thread.forum.id}}">{{thread.forum.name}}</a></p>
                     <p>{{ thread.cant_replies }} respuestas</p>
                 </div>
