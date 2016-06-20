@@ -25,7 +25,6 @@
         <h2>{{ event.eventName }} </h2>
         <h3>{{ event.fecha }} {{ event.startTime }} </h3>
         <h4> Organizado por: {{ event.organizer }} </h4>
-        <p>{{ event.id }} </p>
         <a href='details?event={{ event.id }}'>Más información...</a>
         {% endfor %}
     </div>
@@ -48,7 +47,11 @@
                 <div class="thread-info">
                     <h4><a href="/thread?id={{thread.id}}">{{thread.name}}</a><small> (Autor: {{thread.author}}) hace {{ thread.submit_date|timesince }}</small></h4>
                     <p>en: <a href="/forum?id={{thread.forum.id}}">{{thread.forum.name}}</a></p>
-                    <p>{{ thread.cant_replies }} respuestas</p>
+                    {% if thread.cant_replies = 0 %}
+                        <p>Sin respuestas todavia</p>
+                        {% else %}
+                        <p>{{ thread.cant_replies }} respuesta{% if thread.cant_replies > 1 %}s{% endif %}</p>
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>

@@ -1,34 +1,51 @@
 {% extends 'base.html' %}
+{%load crispy_forms_tags %}
+{% load staticfiles %}
+
+
 {% block content %}
 <div class="container">
     <div class='row'>
-        <div class='col-md-12'>
+        <div class='col-md-10 col-md-offset-1'>
             <h1> Información de evento:</h1>
             <h5> Nombre del evento:{{ event.eventName }}</h5>
             <p>Fecha: {{ event.startTime }}.</p>
             <p>Lugar:{{ event.local }}.</p>
             <p>Organiza: {{event.organizer}}.</p>
-
         </div>
     </div>
     <div class='row'>
-        <div class='col-md-12'>
+        <div class='col-md-8 col-md-offset-2'>
             <h2>Comentarios:</h2>
             {% for comment in comments %}
-                <h4> {{ comment.user }} dice:</h4>
-                <p> {{ comment.comment|linebreaks }} </p>
-                {% if user != comment.user %}
-                    <a href='reportUser?user={{ comment.user.id}}'>Reportar</a>
-                {% endif %}
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-5">
+                            {% if comment.user.userprofile.profilePic %}
+                                <img class="img-circle img-responsive profile-pic"src="{{ comment.user.userprofile.profilePic.image.url }}" >
+                            {% endif %}
+                        </div>
+                        <div class="col-md-7">
+                            
+                            <h4> {{ comment.user }}<small><a href="profile?user={{ comment.user.username }}"> (Ver perfil)</a></small></h4>
+                            <p>hace: {{comment.submit_date|timesince}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <p> {{ comment.comment|linebreaks }} </p>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
     <div class='row'>
-        <div class='col-md-12'>
+        <div class='col-md-8 col-md-offset-2'>
             <h3>Comentar:</h3>
             <form method='POST'>
                 {% csrf_token %}
-                {{ form_comment.as_p }}
+                {{ form_comment|crispy }}
                 <input type='submit' value='Comentar'/>
             </form>
         </div>

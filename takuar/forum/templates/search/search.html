@@ -1,35 +1,41 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block content %}
-    <h2>Buscar:</h2>
-
-    <form method="get" action=".">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type="submit" value="Buscar">
-                </td>
-            </tr>
-        </table>
-
-        {% if query %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Buscar:</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            <form method="get" action=".">
+                {{ form|crispy }}
+                <input type="submit" class="btn btn-default" value="Buscar">
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% if query %}
             <h3>Resultados:</h3>
 
             {% for result in page.object_list %}
-                <p>{{ result.name }}, {{ result.submit_date }}</p>
+            <p>{{ result.name }}, {{ result.submit_date }}</p>
             {% empty %}
-                <p>No se encontraron noticias.</p>
+            <p>No se encontraron resultados :(</p>
             {% endfor %}
 
             {% if page.has_previous or page.has_next %}
-                <div>
-                    {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
-                    |
-                    {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
-                </div>
+            <div>
+                {% if page.has_previous %}<a href="?q={{ query }}&amp;page={{ page.previous_page_number }}">{% endif %}&laquo; Previous{% if page.has_previous %}</a>{% endif %}
+                |
+                {% if page.has_next %}<a href="?q={{ query }}&amp;page={{ page.next_page_number }}">{% endif %}Next &raquo;{% if page.has_next %}</a>{% endif %}
+            </div>
             {% endif %}
-        {% endif %}
-    </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
