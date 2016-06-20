@@ -1,5 +1,5 @@
 from django import forms
-from forum.models import Thread, Reply
+from forum.models import Thread, Reply, FlagReply
 
 class FormThread(forms.ModelForm):
     class Meta:
@@ -25,3 +25,5 @@ class FormReply(forms.ModelForm):
         labels = {
                 'message':('Respuesta:'),
                 }
+
+

@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, patterns, include
-from django.contrib import admin
+from django.contrib import admin 
 from django.contrib.auth import views
 from django.views.generic.edit import CreateView
 
@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^forum','forum.views.forumHome'),
     url(r'^thread','forum.views.viewThread'),
     url(r'^invitation_accept/', 'sitio.views.acceptInvitation'),
+    url(r'^flag/', 'forum.views.flagReply'),
     #Haystack
     url(r'^search/', include('haystack.urls')),
 ]
