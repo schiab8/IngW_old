@@ -133,6 +133,7 @@ def searchUser(request):
         return render(request, 'user_list.html',{'user_list':user_list})
 def getEvents(request):
     if request.method == "GET":
+        now = datetime.now()
         events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
         print events
         return render(request, 'events_list.html', {'event_list':events})
