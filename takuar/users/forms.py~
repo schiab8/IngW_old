@@ -53,4 +53,4 @@ class UserRegisterForm(forms.Form):
         userProfile.save()
 
         #print "username: %s, password: %s, email: %s" % (userAuth, userAuth.password, userAuth.email)
-        #print "userProfile: %s" % userProfile
+        print "userProfile: %s" % userProfile

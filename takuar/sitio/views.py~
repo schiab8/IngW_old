@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404
 
 from django.db.models import Count
 
@@ -87,12 +86,8 @@ def userProfile(request):
 
 def detalles_grupo(request):
     if request.method == "GET":
-        id_grupo = request.GET.get('id_grupo')
-        grupo = get_object_or_404(Group, id= id_grupo)
-        #grupo = Group.objects.filter(id=id_grupo)
-    else:
-        id_grupo = request.POST.get('id_grupo')
-        grupo = get_object_or_404(Group, id= id_grupo)
+	    id_grupo = request.GET.get('id_grupo')
+        grupo = Group.objects.filter(id=id_grupo)
     return render(request, 'detalles_grupo.html', {'grupo':grupo})
 
 @login_required

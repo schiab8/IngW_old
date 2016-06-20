@@ -23,14 +23,17 @@
     {% if groups %}
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <h1>Grupos:</h2>
-            <h2>Creador de:</h2>
+            <h1>Grupos:</h1>
             <ul>
                 {% for group in groups %}
                 <li>Evento: {{ group.event }}</li>
                 <p>
                 Miembros:{{ group.invitation_set }}
                 </p>
+				<form method="GET">
+					<input type="hidden" name="id_grupo" value="{{group.id}}"/>
+					<input type="submit" value="Ver Detalle" class="btn btn-success btn-sm" formaction="{% url 'sitio.views.detalles_grupo' %}"/>
+				</form>
                 {% endfor %}
             </ul>
         </div>

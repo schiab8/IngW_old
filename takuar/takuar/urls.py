@@ -24,6 +24,7 @@ from users.views import user_registration_view
 from sitio.views import userProfile
 
 from users.forms import UserRegisterForm
+admin.autodiscover()
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -37,6 +38,7 @@ urlpatterns = [
     url(r'reportUser','sitio.views.reportUser'),
     url(r'^profile/', userProfile),
     url(r'^newGroup', 'sitio.views.newGroup'),
+	url(r'^detallesGrupo', 'sitio.views.detalles_grupo'),
     url(r'^search_user','sitio.views.searchUser'),
     url(r'^get_events', 'sitio.views.getEvents'),
     url(r'^get_invitations', 'sitio.views.getInvitations'),
