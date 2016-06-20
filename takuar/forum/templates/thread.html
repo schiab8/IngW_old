@@ -6,8 +6,21 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3 col-md-offset-1">
-            <h3>{{ thread.author.username }}</h3>
-            <h4>{{thread.submit_date}}</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    {% if thread.author.userprofile.profilePic %}
+                    <img class="img-circle img-responsive profile-pic"src="{{ thread.author.userprofile.profilePic.image.url }}" >
+                    {% endif %}
+                </div>
+                <div class="col-md-8">
+                    <h3><a href="profile?user={{ thread.author.username }}">{{ thread.author.username }}</a></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>{{thread.submit_date}}</h4>
+                </div>
+            </div>
         </div>
         <div class="col-md-7">
             <h1>{{thread.name}}</h1>
@@ -17,7 +30,21 @@
     {% for reply in replies %}
         <div class="row reply-box">
             <div class="col-md-3 col-md-offset-1">
-                <h2>{{reply.author}} dice:</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        {% if reply.author.userprofile.profilePic %}
+                        <img class="img-circle img-responsive profile-pic"src="{{ reply.author.userprofile.profilePic.image.url }}" >
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <h3><a href="profile?user={{ reply.author.username }}">{{ reply.author.username }}</a></h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>{{reply.submit_date}}</h4>
+                    </div>
+                </div>
             
             </div>
             <div class="col-md-7">

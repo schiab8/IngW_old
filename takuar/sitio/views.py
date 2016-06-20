@@ -1,13 +1,16 @@
 from django.shortcuts import render
-from sitio.models import Event, EventComment, Picture, UserProfile, Invitation, Group, Meeting
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
-from sitio.forms import FormEvent, FormEventComment, FormReportUser, FormGroup, FormInvitation
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+
+from django.db.models import Count
+
 from datetime import datetime
 
-from django.forms import modelformset_factory
+from sitio.models import Event, EventComment, Picture, UserProfile, Invitation, Group, Meeting
+from sitio.forms import FormEvent, FormEventComment, FormReportUser, FormGroup, FormInvitation
+from forum.models import Forum, Thread
 
 
 # Create your views here.
@@ -17,7 +20,9 @@ def test(request): #Testeando Bootstrap
 def home(request):
     now = datetime.now()
     events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
-    return render(request, 'inicio.html', {'events_list': events, 'user':request.user})
+    forums = Forum.objects.all().annotate(cant_threads=Count('thread')).order_by('-cant_threads')[:4]
+    threads = Thread.objects.all().annotate(cant_replies=Count('reply')).order_by('-submit_date')[:4]
+    return render(request, 'inicio.html', {'events_list': events, 'user':request.user, 'forums':forums, 'threads':threads})
 
 
 @login_required

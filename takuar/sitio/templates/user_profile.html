@@ -7,6 +7,9 @@
             <img class="img-responsive" src="{{ userProfile.profilePic.image.url }}" >
             {% endif %}
             <h2>{{ userProfile.name }} {{ userProfile.lastName }} <small>({{ userProfile.userAuth }}) </small></h2>
+            {% if userProfile.userAuth != request.user %}
+            <a href='reportUser?user={{ userProfile.userAuth.id}}'>Reportar usuario</a>
+            {% endif %}
 
         </div>
         <div class="col-md-9">
