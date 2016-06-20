@@ -13,7 +13,7 @@
             <div id="invitations-list"></div>
         </div>
     </div>
-    <div class="col-md-7 col-md-offset-1">
+    <div class="col-md-6 col-md-offset-1">
         <h1 id="title">{% block titulo %}Home{% endblock %}</h1>
         <a href="/newGroup">Organizar salida</a>
         <p></p>
@@ -29,14 +29,30 @@
         <a href='details?event={{ event.id }}'>Más información...</a>
         {% endfor %}
     </div>
-    <div class="col-md-3">
-        <h2>Foros más activos:</h2>
-        {% for forum in forums %}
-            <div class="forum-info">
-                <h3><a href="/forum?id={{forum.id}}">{{forum.name}}</a></h3>
-                <p>{{forum.cant_threads}} temas</p>
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Foros más activos:</h2>
+                {% for forum in forums %}
+                <div class="forum-info">
+                    <h4><a href="/forum?id={{forum.id}}">{{forum.name}}</a></h4>
+                    <p>{{forum.cant_threads}} temas</p>
+                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Últimos temas:</h2>
+                {% for thread in threads %}
+                <div class="thread-info">
+                    <h4><a href="/thread?id={{thread.id}}">{{thread.name}}</a><small> (Autor: {{thread.author}})</small></h4>
+                    <p>en: <a href="/forum?id={{thread.forum.id}}">{{thread.forum.name}}</a></p>
+                    <p>{{ thread.cant_replies }} respuestas</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

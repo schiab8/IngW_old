@@ -20,9 +20,9 @@ def test(request): #Testeando Bootstrap
 def home(request):
     now = datetime.now()
     events = Event.objects.filter(startTime__gte=now).order_by('-startTime')
-    forums = Forum.objects.all().annotate(cant_threads=Count('thread')).order_by('-cant_threads')
-    print forums
-    return render(request, 'inicio.html', {'events_list': events, 'user':request.user, 'forums':forums})
+    forums = Forum.objects.all().annotate(cant_threads=Count('thread')).order_by('-cant_threads')[:4]
+    threads = Thread.objects.all().annotate(cant_replies=Count('reply')).order_by('-submit_date')[:4]
+    return render(request, 'inicio.html', {'events_list': events, 'user':request.user, 'forums':forums, 'threads':threads})
 
 
 @login_required
