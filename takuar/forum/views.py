@@ -19,7 +19,7 @@ def forumHome(request):
         form = FormThread(request.POST)
         if form.is_valid():
             form.save()
-            context['form'] = FormReply()
+            context['form'] = FormThread()
     return render(request, 'forum.html', context)
 
 
