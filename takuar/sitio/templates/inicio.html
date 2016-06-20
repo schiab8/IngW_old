@@ -7,53 +7,57 @@
 
 {% block content %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <button class="btn btn-default" id="toggle-invitations">Ver invitaciones</button>
-            <div id="invitations-list"></div>
-        </div>
-    </div>
-    <div class="col-md-6 col-md-offset-1">
-        <h1 id="title">{% block titulo %}Home{% endblock %}</h1>
-        <a href="/newGroup">Organizar salida</a>
-        <p></p>
-        <a href='/addEvent'>Crear evento!</a>
-
-        <h2> Próximos eventos: </h2>
-        {% for event in events_list %}
-        <hr>
-        <h2>{{ event.eventName }} </h2>
-        <h3>{{ event.fecha }} {{ event.startTime }} </h3>
-        <h4> Organizado por: {{ event.organizer }} </h4>
-        <a href='details?event={{ event.id }}'>Más información...</a>
-        {% endfor %}
-    </div>
-    <div class="col-md-4">
+    {% if request.user.is_authenticated %}
         <div class="row">
             <div class="col-md-12">
-                <h2>Foros más activos:</h2>
-                {% for forum in forums %}
-                <div class="forum-info">
-                    <h4><a href="/forum?id={{forum.id}}">{{forum.name}}</a></h4>
-                    <p>{{forum.cant_threads}} temas</p>
-                </div>
-                {% endfor %}
+                <button class="btn btn-default" id="toggle-invitations">Ver invitaciones</button>
+                <div id="invitations-list"></div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <h2>Últimos temas:</h2>
-                {% for thread in threads %}
-                <div class="thread-info">
-                    <h4><a href="/thread?id={{thread.id}}">{{thread.name}}</a><small> (Autor: {{thread.author}}) hace {{ thread.submit_date|timesince }}</small></h4>
-                    <p>en: <a href="/forum?id={{thread.forum.id}}">{{thread.forum.name}}</a></p>
-                    {% if thread.cant_replies = 0 %}
+    {% endif %}
+    <div class="row">
+        <div class="col-md-6 col-md-offset-1">
+            <h1 id="title">{% block titulo %}Home{% endblock %}</h1>
+            <a href="/newGroup">Organizar salida</a>
+            <p></p>
+            <a href='/addEvent'>Crear evento!</a>
+
+            <h2> Próximos eventos: </h2>
+            {% for event in events_list %}
+            <hr>
+            <h2>{{ event.eventName }} </h2>
+            <h3>{{ event.fecha }} {{ event.startTime }} </h3>
+            <h4> Organizado por: {{ event.organizer }} </h4>
+            <a href='details?event={{ event.id }}'>Más información...</a>
+            {% endfor %}
+        </div>
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Foros más activos:</h2>
+                    {% for forum in forums %}
+                    <div class="forum-info">
+                        <h4><a href="/forum?id={{forum.id}}">{{forum.name}}</a></h4>
+                        <p>{{forum.cant_threads}} temas</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Últimos temas:</h2>
+                    {% for thread in threads %}
+                    <div class="thread-info">
+                        <h4><a href="/thread?id={{thread.id}}">{{thread.name}}</a><small> (Autor: {{thread.author}}) hace {{ thread.submit_date|timesince }}</small></h4>
+                        <p>en: <a href="/forum?id={{thread.forum.id}}">{{thread.forum.name}}</a></p>
+                        {% if thread.cant_replies = 0 %}
                         <p>Sin respuestas todavia</p>
                         {% else %}
                         <p>{{ thread.cant_replies }} respuesta{% if thread.cant_replies > 1 %}s{% endif %}</p>
-                    {% endif %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>

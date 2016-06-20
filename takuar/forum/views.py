@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from forum.models import Forum, Reply, Thread
+from forum.models import Forum, Reply, Thread, FlagReply
 from forum.forms import FormReply, FormThread
 from django.http import HttpResponse
 
@@ -40,4 +40,18 @@ def viewThread(request):
             form.save()
             context['form'] = FormReply()
     return render(request, 'thread.html', context)
+
+def flagReply(request):
+    if request.user.is_authenticated():
+        if request.method == "POST":
+            try:
+                id = request.POST.get('reply_id')
+                print id
+                print request.user.id
+                flag = FlagReply(reply_id = id, userAuth = request.user)
+                flag.save()
+                return HttpResponse('Reply reportada')
+            except:
+                return HttpResponse("Error")
+    return HttpResponse("Usuario anonimo") 
 

@@ -29,3 +29,8 @@ class Reply(models.Model):
     
     def __str__(self):
         return 'Respuesta de %s. Fecha:%s' %(self.author, self.submit_date)
+
+class FlagReply(models.Model):
+    reply = models.ForeignKey(Reply)
+    userAuth = models.ForeignKey(User)
+    submit_date = models.DateTimeField(auto_now=True)

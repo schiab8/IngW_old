@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         {% if reply.author.userprofile.profilePic %}
-                        <img class="img-circle img-responsive profile-pic"src="{{ reply.author.userprofile.profilePic.image.url }}" >
+                            <img class="img-circle img-responsive profile-pic"src="{{ reply.author.userprofile.profilePic.image.url }}" >
                         {% endif %}
                     </div>
                     <div class="col-md-8">
@@ -45,13 +45,21 @@
                         <h4>{{reply.submit_date}}</h4>
                     </div>
                 </div>
-            
             </div>
             <div class="col-md-7">
                 <div>
                     {{reply.message|linebreaks}}
                 </div>
             </div>
+            {% if request.user != reply.author %}
+                <div class="col-md-1">
+                    <form method="POST" action="/flag/">
+                        {% csrf_token %}
+                        <input type="hidden" name="reply_id" value = "{{reply.id}}">
+                        <button type="submit" class="btn btn-default" value="flag"><span class="glyphicon glyphicon-flag"></span></button>
+                    </form>
+                </div>
+            {% endif %}
         </div>
     {% endfor %}
     <div class="row">
