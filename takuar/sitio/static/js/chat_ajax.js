@@ -26,26 +26,31 @@ $.ajaxSetup({
 
 
 function get_chat() {
-    var form = $('#chat-form')[0];
-    console.log(form)
-    form_data = new FormData(form);
-    console.log(form_data);
-    $.ajax({url: url_chat, data:form_data}).done(update_chat);
+    console.log("pididendo chats");
+    var serialized_data = $('#chat-form').serialize();
+    $.ajax(
+    {
+        url: url_chat,
+        data: serialized_data,
+        success: update_chat(),
+        processData: false,
+        contentType: false,
+    }).done(update_chat);
 }
 
 function update_chat(data,options){
-    $('chats').html(data);
+    $('#chats').html(data);
+    window.setTimeout(get_chat, 4000);
 }
 
 $(document).ready(function() {
-    get_chat();
     $('#chat-form').submit(function(e) {
         e.preventDefault();
         var form = $(this).get(0);
         form_data = new FormData(form);
-        for (var [key, value] of form_data.entries()) { 
-              console.log("+++", key, value);
-        }
+        // for (var [key, value] of form_data.entries()) { 
+        //     console.log("+++", key, value);
+        // }
         $.ajax(
             {
                 type: 'POST',
@@ -54,6 +59,7 @@ $(document).ready(function() {
                 success: update_chat(),
                 processData: false,
                 contentType: false,
-            }).done(get_invitations);
+            }).done(get_chat);
     });
+    get_chat();
 });

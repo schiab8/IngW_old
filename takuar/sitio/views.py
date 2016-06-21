@@ -206,12 +206,14 @@ def chat(request):
         meeting = Meeting.objects.get(pk=request.POST.get('meeting'))
         if request.user in users:
             chat_msg = ChatMessage(message=request.POST.get('message'), userAuth = request.user, meeting = meeting)
+            chat_msg.save()
             print "Mensaje posteado"
     else:
-        print request.GET
-        print type(request.GET.get('meeting')), request.GET.get('meeting')
+        print "HOLA"
+        print request.GET.get('meeting')
         meeting = Meeting.objects.get(pk=request.GET.get('meeting'))
-        messages = ChatMessage.objects.filter(meeting = request.GET.get('meeting')).order_by('pk')
+        print meeting
+        messages = ChatMessage.objects.filter(meeting = meeting).order_by('pk')
+        print messages
         return render(request, 'chat_messages.html',{'messages':messages})
-    return HttpResponse(meeting_groups)
 

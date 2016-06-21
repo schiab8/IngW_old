@@ -1,5 +1,5 @@
 from django.contrib import admin
-from sitio.models import UserProfile, Picture, UserType, Gender, Event, Local, LocalType, PictureComment, EventComment, Comment, UserReport, Group, Invitation, Meeting
+from sitio.models import UserProfile, Picture, UserType, Gender, Event, Local, LocalType, PictureComment, EventComment, Comment, UserReport, Group, Invitation, Meeting, ChatMessage
 
 # Register your models here.
 
@@ -14,6 +14,7 @@ admin.site.register(LocalType)
 admin.site.register(Group)
 admin.site.register(Invitation)
 admin.site.register(Meeting)
+admin.site.register(ChatMessage)
 
 
 admin.site.register(Comment)
