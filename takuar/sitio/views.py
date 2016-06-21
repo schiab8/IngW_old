@@ -124,7 +124,7 @@ def newGroup(request):
                 for id in guest_ids:
                     invitation = Invitation(group=group, userAuth=User.objects.get(pk=id))
                     invitation.save()
-                return HttpResponse('Grupo creado')
+                return HttpResponseRedirect('/')
     data['form'] = form
     return render(request, 'newGroup.html', data)
 

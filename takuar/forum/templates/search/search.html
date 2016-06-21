@@ -26,8 +26,9 @@
 							<form method="GET">
 								<a href="/thread/?id={{ result.pk }}">{{ result.name }}, {{ result.submit_date }}</a>
 							</form>
+				{% else %}
+					<p>{{ result.name }}, {{ result.submit_date }}</p>
 				{% endif %}
-				<p>{{ result.name }}, {{ result.submit_date }}</p>
             {% empty %}
             <p>No se encontraron resultados :(</p>
             {% endfor %}
