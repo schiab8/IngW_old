@@ -53,7 +53,7 @@
             </div>
             {% if request.user != reply.author %}
                 <div class="col-md-1">
-                    <form method="POST" action="/flag/">
+                    <form class="flag-reply" method="POST" action="/flag/">
                         {% csrf_token %}
                         <input type="hidden" name="reply_id" value = "{{reply.id}}">
                         <button type="submit" class="btn btn-default" value="flag"><span class="glyphicon glyphicon-flag"></span></button>
@@ -73,4 +73,11 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    var url_flag = "{% url 'forum.views.flagReply' %}"
+</script>
+<script src="{% static 'js/flag_ajax.js' %}"></script>
 {% endblock %}

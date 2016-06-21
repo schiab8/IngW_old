@@ -50,6 +50,7 @@ def flagReply(request):
                 print request.user.id
                 flag = FlagReply(reply_id = id, userAuth = request.user)
                 flag.save()
+                print flag
                 return HttpResponse('Reply reportada')
             except:
                 return HttpResponse("Error")
