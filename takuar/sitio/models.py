@@ -69,6 +69,19 @@ class Event(models.Model):
 class Meeting(models.Model):
     picture = models.ForeignKey(Picture, blank=True, null=True)
 
+    def __str__(self):
+        return str(self.id)
+
+
+class ChatMessage(models.Model):
+    message = models.TextField(max_length=200, null=False, blank=False)
+    userAuth = models.ForeignKey(settings.AUTH_USER_MODEL)
+    meeting = models.ForeignKey(Meeting)
+
+    def __str__(self):
+        return self.message
+    
+
 class Group(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL)
     event = models.ForeignKey(Event)

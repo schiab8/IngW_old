@@ -9,7 +9,7 @@ from django.db.models import Count
 
 from datetime import datetime
 
-from sitio.models import Event, EventComment, Picture, UserProfile, Invitation, Group, Meeting
+from sitio.models import Event, EventComment, Picture, UserProfile, Invitation, Group, Meeting, ChatMessage
 from sitio.forms import FormEvent, FormEventComment, FormReportUser, FormGroup, FormInvitation
 from forum.models import Forum, Thread
 
@@ -187,3 +187,24 @@ def acceptInvitation(request):
             print '%s (%s)' % (e.message, type(e))
             print "Error alguno"
             return HttpResponse('Error')
+
+@login_required
+def chat(request):
+    if request.method == "POST":
+        meeting_groups = Group.objects.filter(meeting__pk = request.POST.get('meeting'))
+        invitations = Invitation.objects.filter(group__in=meeting_groups)
+        users = [invitation.userAuth for invitation in invitations]
+        users.append(meeting_groups[0].creator)
+        users.append(meeting_groups[1].creator)
+        meeting = Meeting.objects.get(pk=request.POST.get('meeting'))
+        if request.user in users:
+            chat_msg = ChatMessage(message=request.POST.get('message'), userAuth = request.user, meeting = meeting)
+            print "Mensaje posteado"
+    else:
+        print request.GET
+        print type(request.GET.get('meeting')), request.GET.get('meeting')
+        meeting = Meeting.objects.get(pk=request.GET.get('meeting'))
+        messages = ChatMessage.objects.filter(meeting = request.GET.get('meeting')).order_by('pk')
+        return render(request, 'chat_messages.html',{'messages':messages})
+    return HttpResponse(meeting_groups)
+

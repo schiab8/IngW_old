@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^thread','forum.views.viewThread'),
     url(r'^invitation_accept/', 'sitio.views.acceptInvitation'),
     url(r'^flag/', 'forum.views.flagReply'),
+    url(r'^chat/', 'sitio.views.chat'),
     #Haystack
     url(r'^search/', include('haystack.urls')),
 ]
