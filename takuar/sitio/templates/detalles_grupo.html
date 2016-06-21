@@ -11,6 +11,14 @@
             <li class="list-group-item"> Evento:  {{ grupo.event }} <small>(<a href='/details?event={{ grupo.event.id }}'>Mas informacion del evento</a>)</small></li> <br>
         </ul>
     </div>
+    <div class="miembros">
+        <h3>Miembros:</h3>
+        <ul>
+        {% for user in users %}
+            <li>{{user}}<small>(<a href="profile?user={{ user }}">Visitar perfil</a>)</small></li>
+        {% endfor %}
+        </ul>
+    <div>
     {% if grupo.meeting %}
     <div class="row">
         <div class="col-md-6">

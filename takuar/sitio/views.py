@@ -92,6 +92,13 @@ def detalles_grupo(request):
         id_grupo = request.GET.get('id_grupo')
         grupo = get_object_or_404(Group, id= id_grupo)
         #grupo = Group.objects.filter(id=id_grupo)
+        if grupo.meeting:
+            meeting_groups = Group.objects.filter(meeting = grupo.meeting)
+            invitations = Invitation.objects.filter(group__in=meeting_groups)
+            users = [invitation.userAuth for invitation in invitations]
+            users.append(meeting_groups[0].creator)
+            users.append(meeting_groups[1].creator)
+            return render(request, 'detalles_grupo.html', {'grupo':grupo, 'users':users})
     else:
         id_grupo = request.POST.get('id_grupo')
         grupo = get_object_or_404(Group, id= id_grupo)

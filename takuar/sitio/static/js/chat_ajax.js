@@ -26,10 +26,11 @@ $.ajaxSetup({
 
 
 function get_chat() {
-    var form = $('#chat-form');
+    var form = $('#chat-form')[0];
+    console.log(form)
     form_data = new FormData(form);
     console.log(form_data);
-    $.ajax({url: url_chat, data:form_data).done(update_chat);
+    $.ajax({url: url_chat, data:form_data}).done(update_chat);
 }
 
 function update_chat(data,options){
