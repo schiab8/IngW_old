@@ -90,3 +90,17 @@
 .flagged {
     color: red;
 }
+.member-confirmed {
+  background-color:limegreen;
+}
+.member-not-confirmed {
+  background-color: red;
+}
+.group-waiting {
+  background-color: #fa0;
+  margin-bottom:15px;
+}
+.group-not-waiting {
+  background-color: #ac1;
+  margin-bottom:15px;
+}

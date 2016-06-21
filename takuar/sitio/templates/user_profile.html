@@ -20,25 +20,81 @@
             </ul>
         </div>
     </div>
-    {% if groups %}
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-12">
             <h1>Grupos:</h1>
-            <ul>
-                {% for group in groups %}
-                <li>Evento: {{ group.event }}</li>
-                <p>
-                Miembros:{{ group.invitation_set }}
-                </p>
-				<form method="GET">
-					<input type="hidden" name="id_grupo" value="{{group.id}}"/>
-					<input type="submit" value="Ver Detalle" class="btn btn-success btn-sm" formaction="{% url 'sitio.views.detalles_grupo' %}"/>
-				</form>
-                {% endfor %}
-            </ul>
         </div>
     </div>
-    {% endif %}
+    <div class="row">
+        {% if creator_of %}
+            <div class="col-md-5">
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="row">
+                            <h2>Creador de:</h2>
+                        </div>
+                        {% for group in member_of %}
+                        <div class="row {% if group.waiting %} group-waiting {%else%} group-not-waiting {%endif%}">
+                            <div class="col-md-3">
+                                {% if group.waiting %}
+                                <h5><strong>En espera</strong></h5>
+                                {%endif%}
+                                <form method="GET">
+                                    <input type="hidden" name="id_grupo" value="{{group.id}}"/>
+                                    <input type="submit" value="Ir al grupo" class="btn btn-success btn-sm" formaction="{% url 'sitio.views.detalles_grupo' %}"/>
+                                </form>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="group">
+                                    <h4><strong>Salida a:</strong> {{group.event}} <small>(<a href='/details?event={{ group.event.id }}'>Mas informacion del evento</a>)</small></h4>
+                                    <h5>Grupo de {{group.creator}}<small>(<a href="profile?user={{ invitation.creator}}">Visitar perfil</a>)</small></h5>
+                                    <h5>Miembros:</h5>
+                                    <ul class="members-list">
+                                        {% for invitation in group.invitation_set.all %}
+                                        <li class="member-item {% if invitation.accepted %} member-confirmed {%else%} member-not-confirmed {% endif %}">{{ invitation.userAuth.username }}<small>(<a href="profile?user={{ invitation.userAuth.username}}">Visitar perfil</a>)</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        {% if member_of %}
+        <div class="col-md-5">
+            <div class="row">
+                <h2>Miembro de:</h2>
+            </div>
+            {% for group in member_of %}
+            <div class="row {% if group.waiting %} group-waiting {%else%} group-not-waiting {%endif%}">
+                <div class="col-md-3">
+                    {% if group.waiting %}
+                    <h5><strong>En espera</strong></h5>
+                    {%endif%}
+                    <form method="GET">
+                        <input type="hidden" name="id_grupo" value="{{group.id}}"/>
+                        <input type="submit" value="Ir al grupo" class="btn btn-success btn-sm" formaction="{% url 'sitio.views.detalles_grupo' %}"/>
+                    </form>
+                </div>
+                <div class="col-md-9">
+                    <div class="group">
+                        <h4><strong>Salida a:</strong> {{group.event}} <small>(<a href='/details?event={{ group.event.id }}'>Mas informacion del evento</a>)</small></h4>
+                        <h5>Grupo de {{group.creator}}<small>(<a href="profile?user={{ invitation.creator}}">Visitar perfil</a>)</small></h5>
+                        <h5>Miembros:</h5>
+                        <ul class="members-list">
+                            {% for invitation in group.invitation_set.all %}
+                            <li class="member-item {% if invitation.accepted %} member-confirmed {%else%} member-not-confirmed {% endif %}">{{ invitation.userAuth.username }}<small>(<a href="profile?user={{ invitation.userAuth.username}}">Visitar perfil</a>)</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
 </div>
 
 

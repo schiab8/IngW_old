@@ -80,8 +80,10 @@ def userProfile(request):
             user_profile = UserProfile.objects.get(userAuth__username=request.GET['user'])
         else:
             user_profile = UserProfile.objects.get(userAuth=request.user)
-            groups = Group.objects.filter(creator=request.user)
-            data['groups']=groups
+            creator_of = Group.objects.filter(creator=request.user)
+            member_of =  Group.objects.filter(invitation__userAuth=request.user)
+            data['creator_of'] = creator_of
+            data['member_of'] = member_of
         data['userProfile']=user_profile
         return render(request, 'user_profile.html', data)
 
