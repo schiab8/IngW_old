@@ -22,7 +22,11 @@
             <h3>Resultados:</h3>
 
             {% for result in page.object_list %}
-            <p>{{ result.name }}, {{ result.submit_date }}</p>
+				{% if result.model_name == 'thread' %}
+							<form method="GET">
+								<a href="/thread/?id={{ result.pk }}">{{ result.name }}, {{ result.submit_date }}</a>
+							</form>
+				{% endif %}
             {% empty %}
             <p>No se encontraron resultados :(</p>
             {% endfor %}
