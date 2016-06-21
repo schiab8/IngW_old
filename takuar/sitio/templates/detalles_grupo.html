@@ -1,45 +1,51 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 {% block content %}
-<div class="panel-heading">
-		<h3>Detalle del Grupo</h3>
-	</div>
-	<div class="panel-body">
-	<ul class="list-group">
-		<li class="list-group-item"> Creador:  {{ grupo.creator }} </li> <br>
-		<li class="list-group-item"> Evento:  {{ grupo.event }} </li> <br>
-		<li class="list-group-item"> Confirmados:  {{ grupo.allConfirmed }} </li> <br>
-		<li class="list-group-item"> En espera:  {{ grupo.waiting}} </li> <br>
-		<li class="list-group-item"> Meeting:  {{ grupo.meeting }} </li> <br>
-	</ul>
-	</div>
-	<div class="col-md-6">
-	<div class="panel panel-success">
-			<div class="panel-heading">
-					<h3 class="panel-title">CHAT</h3>
-			</div>
-			<div class="panel-body">
-				{% for c in chat %}
-					<ul class="list-group">
-						<li class="list-group-item"></li>
-					</ul>
-				{% endfor %}
-		</div>
-	</div>
-</div>
-	<div class="col-md-5" >
-	<div class="panel panel-success">
-		<div class="panel-heading">
-				<h3 class="panel-title">CHAT</h3>
-		</div>
-		<div class="panel-body">
-			<form method="POST">
-				{% csrf_token %}
-				<textarea name="descripcion" type="textarea" rows="5" cols="50"/> </textarea>
-				<br/>
-				<input type="submit" value="Enviar" class="btn btn-success btn-sm" style="font-family:arial black;padding-left:10" formaction=""/>
-			</form>
-		</div>
-	</div>
+<div class="container">
+    <div class="panel-heading">
+        <h3>Detalles de mi grupo:</h3>
+    </div>
+    <div class="panel-body">
+        <ul class="list-group">
+            <li class="list-group-item"> Creador:  {{ grupo.creator }} <small>(<a href="profile?user={{ invitation.creator}}">Visitar perfil</a>)</small></li> <br>
+            <li class="list-group-item"> Evento:  {{ grupo.event }} <small>(<a href='/details?event={{ grupo.event.id }}'>Mas informacion del evento</a>)</small></li> <br>
+        </ul>
+    </div>
+    {% if grupo.meeting %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">CHAT</h3>
+                </div>
+                    <div id="chats"></div>
+            </div>
+        </div>
+        <div class="col-md-5" >
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">CHAT</h3>
+                </div>
+                <div class="panel-body">
+                    <form id="chat-form" method="POST" action="/chat/">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value = "{{request.user.id}}">
+                        <input type="hidden" name="meeting" value="{{grupo.meeting.id}}">
+                        <textarea name="message" type="textarea" rows="5" cols="50"/> </textarea>
+                        <br/>
+                        <input type="submit" value="Enviar" class="btn btn-success btn-sm" style="font-family:arial black;padding-left:10" formaction=""/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 
+{% endblock %}
+{% block extra_js %}
+<script>
+    var url_chat = "{% url 'sitio.views.chat' %}";
+</script>
+<script src="{% static 'js/chat_ajax.js' %}"></script>
 {% endblock %}

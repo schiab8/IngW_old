@@ -33,7 +33,7 @@
                         <div class="row">
                             <h2>Creador de:</h2>
                         </div>
-                        {% for group in member_of %}
+                        {% for group in creator_of %}
                         <div class="row {% if group.waiting %} group-waiting {%else%} group-not-waiting {%endif%}">
                             <div class="col-md-3">
                                 {% if group.waiting %}
@@ -85,7 +85,7 @@
                         <h5>Miembros:</h5>
                         <ul class="members-list">
                             {% for invitation in group.invitation_set.all %}
-                            <li class="member-item {% if invitation.accepted %} member-confirmed {%else%} member-not-confirmed {% endif %}">{{ invitation.userAuth.username }}<small>(<a href="profile?user={{ invitation.userAuth.username}}">Visitar perfil</a>)</li>
+                            <li class="member-item {% if invitation.accepted %} member-confirmed {%else%} member-not-confirmed {% endif %}">{{ invitation.userAuth.username }}<small>(<a href="profile?user={{ invitation.userAuth.username}}">Visitar perfil</a>)</small></li>
                             {% endfor %}
                         </ul>
                     </div>
