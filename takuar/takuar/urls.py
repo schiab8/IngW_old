@@ -14,11 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, patterns, include
+from django.conf.urls import static
 from django.contrib import admin 
 from django.contrib.auth import views
 from django.views.generic.edit import CreateView
 
 from django.conf import settings
+
 
 from users.views import user_registration_view
 from sitio.views import userProfile
@@ -38,7 +40,7 @@ urlpatterns = [
     url(r'reportUser','sitio.views.reportUser'),
     url(r'^profile/', userProfile),
     url(r'^newGroup', 'sitio.views.newGroup'),
-	url(r'^detallesGrupo', 'sitio.views.detalles_grupo'),
+    url(r'^detallesGrupo', 'sitio.views.detalles_grupo'),
     url(r'^search_user','sitio.views.searchUser'),
     url(r'^get_events', 'sitio.views.getEvents'),
     url(r'^get_invitations', 'sitio.views.getInvitations'),
@@ -49,7 +51,7 @@ urlpatterns = [
     url(r'^chat/', 'sitio.views.chat'),
     #Haystack
     url(r'^search/', include('haystack.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:
     urlpatterns += patterns('',
