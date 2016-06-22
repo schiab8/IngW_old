@@ -20,21 +20,27 @@
         <div class="col-md-12">
             {% if query %}
             <h3>Resultados:</h3>
-            <ul>
+            <table class="table table-striped">
             {% for result in page.object_list %}
-                <li>
-				{% if result.model_name == 'thread' %}
-                    <a href="/thread/?id={{ result.pk }}">{{ result.name }}, {{ result.submit_date }}</a>
-                {% elif result.model_name == 'event' %}
-                    <a href='details?event={{ result.pk }}'>Más información...</a>
-                {% else %}
-                    <p>{{ result.name }}, {{ result.submit_date }}</p>
-                {% endif %}
-                </li>
+                <tr>
+                    <td>
+                        {% if result.model_name == 'thread' %}
+                            <a href="/thread/?id={{ result.pk }}">{{ result.name }}, {{ result.submit_date }}</a>
+                        {% elif result.model_name == 'event' %}
+                            <a href='details?event={{ result.pk }}'>Más información...</a>
+                        {% else %}
+                            <p>{{ result.name }}, {{ result.submit_date }}</p>
+                        {% endif %}
+                    </td>
+                </tr>
             {% empty %}
-            <p>No se encontraron resultados :(</p>
+            <tr>
+                <td>
+                    <p>No se encontraron resultados :(</p>
+                </td>
+            </tr>
             {% endfor %}
-            </ul>
+            </table>
 
             {% if page.has_previous or page.has_next %}
             <div>
