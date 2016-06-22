@@ -142,6 +142,21 @@ LOGOUT_URL = '/login'
 
 if os.environ.get('HEROKU', False):
     # settings especificas para heroku
+    from urlparse import urlparse
+
+	es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
+	port = es.port or 80
+
+	HAYSTACK_CONNECTIONS = {
+		'default': {
+			'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+			'URL': es.scheme + '://' + es.hostname + ':' + str(port),
+			'INDEX_NAME': 'documents',
+		},
+	}
+
+	if es.username:
+		HAYSTACK_CONNECTIONS['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
     DEBUG = False
     import dj_database_url
     DATABASES['default'] = dj_database_url.config()
