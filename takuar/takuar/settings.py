@@ -148,7 +148,7 @@ if os.environ.get('HEROKU', False):
     ALLOWED_HOSTS = ['*']
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
-    from urlparse import urlparse
+    from urllib.parse import urlparse
     
     es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
     port = es.port or 80
